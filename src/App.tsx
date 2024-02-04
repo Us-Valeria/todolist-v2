@@ -2,7 +2,7 @@ import { Typography } from "antd";
 import React from "react";
 import TaskList from "./components/TaskList";
 import TaskInput from "./components/TaskInput";
-import { TasksProvider } from "./components/TasksContext.js";
+import { TasksProvider } from "./components/TasksContext";
 
 const { Title } = Typography;
 
