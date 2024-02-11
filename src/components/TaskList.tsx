@@ -2,23 +2,26 @@ import { List } from "antd";
 import TaskItem from "./TaskItem";
 import React, { useContext } from "react";
 import { TasksContext } from "./TasksContext";
-import type { Task } from "./Task";
 
 function TaskList() {
-  const tasks: Task[] | null = useContext(TasksContext);
+  const tasks = useContext(TasksContext);
   return (
-    tasks && (
-      <List
-        size="small"
-        bordered
-        dataSource={tasks}
-        renderItem={(task: Task) => (
-          <List.Item>
-            <TaskItem key={task.id} task={task} />
-          </List.Item>
-        )}
-      />
-    )
+    <div>
+      {tasks && tasks.length > 0 ? (
+        <List
+          size="large"
+          bordered
+          dataSource={tasks}
+          renderItem={(task) => (
+            <List.Item>
+              <TaskItem key={task.id} task={task} />
+            </List.Item>
+          )}
+        />
+      ) : (
+        <p>Список задач пуст</p>
+      )}
+    </div>
   );
 }
 export default TaskList;

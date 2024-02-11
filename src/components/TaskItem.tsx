@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
-import { Button, Checkbox, Input, Typography } from "antd";
+import { Button, Checkbox, Input, Typography, Form } from "antd";
 import { TasksDispatchContext } from "./TasksContext";
 import type { CheckboxProps } from "antd";
-import type { Task } from "./Task";
+import type { Task } from "../models/Task";
 
 const { Text } = Typography;
 
@@ -28,43 +28,61 @@ function TaskItem({ task }: Props) {
   return (
     dispatch && (
       <>
-        <Checkbox onChange={onChange} />
-        {isEditing ? (
-          <>
-            <Input
-              type="text"
-              value={task.text}
-              onChange={(e) => {
+        <Form layout="inline">
+          <Form.Item>
+            <Checkbox onChange={onChange} />
+          </Form.Item>
+          {isEditing ? (
+            <>
+              <Form.Item>
+                <Input
+                  type="text"
+                  value={task.text}
+                  onChange={(e) => {
+                    dispatch({
+                      type: "changed",
+                      task: {
+                        ...task,
+                        text: e.target.value,
+                      },
+                    });
+                  }}
+                />
+              </Form.Item>
+              <Form.Item>
+                <Button htmlType="submit" onClick={() => setIsEditing(false)}>
+                  Сохранить
+                </Button>
+              </Form.Item>
+            </>
+          ) : (
+            <>
+              <Form.Item>
+                <Text>{task.text}</Text>
+              </Form.Item>
+              <Form.Item>
+                <Button onClick={() => setIsEditing(true)}>
+                  Редактировать
+                </Button>
+              </Form.Item>
+            </>
+          )}
+          <Form.Item>
+            <Button
+              onClick={() =>
                 dispatch({
-                  type: "changed",
+                  type: "deleted",
                   task: {
                     ...task,
-                    text: e.target.value,
+                    id: task.id,
                   },
-                });
-              }}
-            />
-            <Button onClick={() => setIsEditing(false)}>Сохранить</Button>
-          </>
-        ) : (
-          <>
-            <Text>{task.text}</Text>
-            <Button onClick={() => setIsEditing(true)}>Редактировать</Button>
-          </>
-        )}
-        <Button
-          onClick={() =>
-            dispatch({
-              type: "deleted",
-              task: {
-                ...task,
-                id: task.id,
-              },
-            })
-          }
-        >
-          Удалить
-        </Button>
+                })
+              }
+            >
+              Удалить
+            </Button>
+          </Form.Item>
+        </Form>
       </>
     )
   );

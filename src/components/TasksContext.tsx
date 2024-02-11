@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext, useReducer } from "react";
-import type { Task } from "./Task";
+import type { Task } from "../models/Task";
 
 export const TasksContext = createContext<Task[] | null>(null);
 export const TasksDispatchContext =
@@ -29,14 +29,17 @@ type Action = {
 function tasksReducer(tasks: Task[], action: Action) {
   switch (action.type) {
     case "added": {
-      return [
-        ...tasks,
-        {
-          id: action.task.id,
-          text: action.task.text,
-          completed: false,
-        },
-      ];
+      if (action.task.text.trim()) {
+        return [
+          ...tasks,
+          {
+            id: action.task.id,
+            text: action.task.text,
+            completed: false,
+          },
+        ];
+      }
+      return tasks;
     }
     case "changed": {
       return tasks.map((t) => {
