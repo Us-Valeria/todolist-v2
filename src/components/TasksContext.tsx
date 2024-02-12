@@ -29,7 +29,7 @@ type Action = {
 function tasksReducer(tasks: Task[], action: Action) {
   switch (action.type) {
     case "added": {
-      if (action.task.text.trim()) {
+      if (action.task.text && action.task.text.trim()) {
         return [
           ...tasks,
           {

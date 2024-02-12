@@ -1,27 +1,72 @@
-import { List } from "antd";
+import { List, Flex, Radio, RadioChangeEvent } from "antd";
 import TaskItem from "./TaskItem";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { TasksContext } from "./TasksContext";
 
 function TaskList() {
   const tasks = useContext(TasksContext);
+  const [filteredTasks, setFilteredTasks] = useState(tasks);
+  const [filter, setFilter] = useState("all");
+
+  const onChange = (e: RadioChangeEvent) => {
+    setFilter(e.target.value);
+    filterTask(e.target.value);
+  };
+
+  const filterTask = (value: string) => {
+    if (tasks) {
+      switch (value) {
+        case "all": {
+          return setFilteredTasks(tasks);
+        }
+        case "active": {
+          return setFilteredTasks(tasks.filter((task) => !task.completed));
+        }
+        case "completed": {
+          return setFilteredTasks(tasks.filter((task) => task.completed));
+        }
+        default:
+          throw new Error("Unknown status: " + filter);
+      }
+    }
+  };
+
+  useEffect(() => {
+    filterTask(filter);
+  }, [tasks]);
+
   return (
-    <div>
-      {tasks && tasks.length > 0 ? (
-        <List
+    <>
+      <Flex vertical gap="middle">
+        <Radio.Group
+          defaultValue={filter}
           size="large"
-          bordered
-          dataSource={tasks}
-          renderItem={(task) => (
-            <List.Item>
-              <TaskItem key={task.id} task={task} />
-            </List.Item>
-          )}
-        />
-      ) : (
-        <p>Список задач пуст</p>
-      )}
-    </div>
+          onChange={onChange}
+          buttonStyle="solid"
+        >
+          <Radio.Button value="all">Все</Radio.Button>
+          <Radio.Button value="active">В процессе</Radio.Button>
+          <Radio.Button value="completed">Завершенные</Radio.Button>
+        </Radio.Group>
+      </Flex>
+
+      <div>
+        {filteredTasks && filteredTasks.length > 0 ? (
+          <List
+            size="large"
+            bordered
+            dataSource={filteredTasks}
+            renderItem={(task) => (
+              <List.Item>
+                <TaskItem key={task.id} task={task} />
+              </List.Item>
+            )}
+          />
+        ) : (
+          <p>Список задач пуст</p>
+        )}
+      </div>
+    </>
   );
 }
 export default TaskList;

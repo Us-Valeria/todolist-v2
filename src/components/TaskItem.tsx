@@ -30,7 +30,7 @@ function TaskItem({ task }: Props) {
       <>
         <Form layout="inline">
           <Form.Item>
-            <Checkbox onChange={onChange} />
+            <Checkbox onChange={onChange} defaultChecked={task.completed} />
           </Form.Item>
           {isEditing ? (
             <>
