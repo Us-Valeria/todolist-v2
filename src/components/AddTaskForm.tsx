@@ -1,22 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Form, Input } from "antd";
-import { TasksDispatchContext } from "./TasksContext";
+import { useTasks } from "../stores/useTasks";
 
 function AddTaskForm() {
-  const dispatch = useContext(TasksDispatchContext);
   const [form] = Form.useForm();
-
-  const addTask = ({ text }: { text: string }) => {
-    dispatch &&
-      dispatch({
-        type: "added",
-        task: {
-          id: String(Date.now()),
-          text: text,
-          completed: false,
-        },
-      });
-  };
+  const addTask = useTasks((state) => state.addTask);
 
   return (
     <div>

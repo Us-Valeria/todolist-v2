@@ -1,10 +1,10 @@
 import { List, Flex, Radio, RadioChangeEvent } from "antd";
 import TaskItem from "./TaskItem";
-import React, { useContext, useState, useEffect } from "react";
-import { TasksContext } from "./TasksContext";
+import React, { useState, useEffect } from "react";
+import { useTasks } from "../stores/useTasks";
 
 function TaskList() {
-  const tasks = useContext(TasksContext);
+  const tasks = useTasks((state) => state.tasks);
   const [filteredTasks, setFilteredTasks] = useState(tasks);
   const [filter, setFilter] = useState("all");
 
@@ -37,7 +37,7 @@ function TaskList() {
 
   return (
     <>
-      <Flex vertical gap="middle">
+      <Flex>
         <Radio.Group
           defaultValue={filter}
           size="large"
