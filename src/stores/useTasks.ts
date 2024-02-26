@@ -4,7 +4,7 @@ import { Task } from "../models/Task";
 
 type TasksStore = {
   tasks: Task[];
-  addTask: ({ text }: { text: string }) => void;
+  addTask: (text: string) => void;
   removeTask: (taskId: string) => void;
   changeTextTask: (value: string, taskId: string) => void;
   changeStatusTask: (taskId: string) => void;
@@ -14,7 +14,7 @@ export const useTasks = create(
   persist<TasksStore>(
     (set) => ({
       tasks: [],
-      addTask: ({ text }: { text: string }) => {
+      addTask: (text: string) => {
         if (text.trim()) {
           set((state) => ({
             tasks: [

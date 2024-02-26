@@ -1,30 +1,33 @@
-import React from "react";
-import { Button, Form, Input } from "antd";
+import React, { useState } from "react";
 import { useTasks } from "../stores/useTasks";
+import TaskForm from "./TaskForm";
 
 function AddTaskForm() {
-  const [form] = Form.useForm();
   const addTask = useTasks((state) => state.addTask);
+  const [textTask, setTextTask] = useState("");
+
+  const onFinishForForm = () => {
+    addTask(textTask);
+    setTextTask("");
+  };
+
+  const onChangeForForm = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setTextTask(e.target.value);
 
   return (
-    <div>
-      <Form
-        layout="horizontal"
-        form={form}
-        onFinish={({ text }) => {
-          addTask({ text });
-          form.resetFields();
-        }}
-      >
-        <Form.Item name="text">
-          <Input type="text" placeholder="Введите задачу..." />
-        </Form.Item>
-        <Form.Item>
-          <Button htmlType="submit">Добавить</Button>
-        </Form.Item>
-      </Form>
+    <div
+      style={{
+        marginTop: "32px",
+        marginBottom: "24px",
+      }}
+    >
+      <TaskForm
+        placeholder={"Введите задачу..."}
+        value={textTask}
+        onFinish={onFinishForForm}
+        onChange={onChangeForForm}
+      />
     </div>
   );
 }
-
 export default AddTaskForm;

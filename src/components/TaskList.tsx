@@ -36,11 +36,16 @@ function TaskList() {
   }, [tasks]);
 
   return (
-    <>
-      <Flex>
+    <div
+      style={{
+        width: "80%",
+        marginLeft: "auto",
+        marginRight: "auto",
+      }}
+    >
+      <Flex gap="middle" align="center">
         <Radio.Group
           defaultValue={filter}
-          size="large"
           onChange={onChange}
           buttonStyle="solid"
         >
@@ -63,10 +68,10 @@ function TaskList() {
             )}
           />
         ) : (
-          <p>Список задач пуст</p>
+          <p style={{ textAlign: "center" }}>Список задач пуст</p>
         )}
       </div>
-    </>
+    </div>
   );
 }
 export default TaskList;
