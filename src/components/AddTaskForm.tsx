@@ -6,12 +6,12 @@ function AddTaskForm() {
   const addTask = useTasks((state) => state.addTask);
   const [textTask, setTextTask] = useState("");
 
-  const onFinishForForm = () => {
+  const onFinishForm = () => {
     addTask(textTask);
     setTextTask("");
   };
 
-  const onChangeForForm = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const onChangeForm = (e: React.ChangeEvent<HTMLInputElement>) =>
     setTextTask(e.target.value);
 
   return (
@@ -24,8 +24,8 @@ function AddTaskForm() {
       <TaskForm
         placeholder={"Введите задачу..."}
         value={textTask}
-        onFinish={onFinishForForm}
-        onChange={onChangeForForm}
+        onFinish={onFinishForm}
+        onChange={onChangeForm}
       />
     </div>
   );

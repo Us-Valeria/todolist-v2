@@ -17,8 +17,8 @@ function TaskItem({ task }: Props) {
   const changeTextTask = useTasks((state) => state.changeTextTask);
   const changeStatusTask = useTasks((state) => state.changeStatusTask);
 
-  const onFinishForForm = () => setIsEditing(false);
-  const onChangeForForm = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const onFinishForm = () => setIsEditing(false);
+  const onChangeForm = (e: React.ChangeEvent<HTMLInputElement>) =>
     changeTextTask(e.target.value, task.id);
 
   return (
@@ -30,9 +30,9 @@ function TaskItem({ task }: Props) {
 
       {isEditing ? (
         <TaskForm
-          onFinish={onFinishForForm}
+          onFinish={onFinishForm}
           value={task.text}
-          onChange={onChangeForForm}
+          onChange={onChangeForm}
         />
       ) : (
         <>

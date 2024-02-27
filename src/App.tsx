@@ -1,7 +1,7 @@
-import { Typography } from "antd";
 import React from "react";
-import TaskList from "./components/TaskList";
+import { Typography } from "antd";
 import AddTaskForm from "./components/AddTaskForm";
+import FilterTaskList from "./components/FilterTaskList";
 
 const { Title } = Typography;
 function App() {
@@ -11,7 +11,7 @@ function App() {
         Список задач
       </Title>
       <AddTaskForm />
-      <TaskList />
+      <FilterTaskList />
     </>
   );
 }
