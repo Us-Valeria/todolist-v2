@@ -8,7 +8,7 @@ type Props = {
   onFinish: () => void;
 };
 
-function TaskForm({ ...props }: Props) {
+function TaskForm({ value, placeholder, onChange, onFinish }: Props) {
   const [form] = Form.useForm();
 
   return (
@@ -20,7 +20,7 @@ function TaskForm({ ...props }: Props) {
       layout="inline"
       form={form}
       onFinish={() => {
-        props.onFinish();
+        onFinish();
         form.resetFields();
       }}
     >
@@ -28,9 +28,9 @@ function TaskForm({ ...props }: Props) {
         <Input
           style={{ width: "40vw" }}
           type="text"
-          defaultValue={props.value}
-          placeholder={props.placeholder}
-          onChange={props.onChange}
+          defaultValue={value}
+          placeholder={placeholder}
+          onChange={onChange}
         />
       </Form.Item>
       <Form.Item>

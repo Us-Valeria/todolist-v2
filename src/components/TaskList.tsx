@@ -3,7 +3,11 @@ import { List } from "antd";
 import TaskItem from "./TaskItem";
 import type { Task } from "../models/Task";
 
-function TaskList({ tasks }: { tasks: Task[] }) {
+type Props = {
+  tasks: Task[];
+};
+
+function TaskList({ tasks }: Props) {
   return (
     <>
       {tasks && tasks.length > 0 ? (
