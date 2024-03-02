@@ -39,7 +39,7 @@ export const useTasks = create(
         set((state) => ({
           tasks: state.tasks.map((task) => {
             if (task.id === taskId) {
-              return { ...task, text: value };
+              return { ...task, text: value.trim() };
             } else {
               return task;
             }

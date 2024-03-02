@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Typography } from "antd";
+import { Checkbox, Typography, Space } from "antd";
 import type { Task } from "../models/Task";
 import { useTasks } from "../stores/useTasks";
 import TaskForm from "./TaskForm";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 type Props = {
   task: Task;
@@ -22,7 +23,7 @@ function TaskItem({ task }: Props) {
     changeTextTask(e.target.value, task.id);
 
   return (
-    <>
+    <Space>
       <Checkbox
         onChange={() => changeStatusTask(task.id)}
         checked={task.completed}
@@ -37,16 +38,11 @@ function TaskItem({ task }: Props) {
       ) : (
         <>
           <Text>{task.text}</Text>
-          <Button
-            onClick={() => setIsEditing(true)}
-            style={{ position: "absolute", right: "22%" }}
-          >
-            Редактировать
-          </Button>
+          <EditOutlined onClick={() => setIsEditing(true)} />
+          <DeleteOutlined onClick={() => removeTask(task.id)} />
         </>
       )}
-      <Button onClick={() => removeTask(task.id)}>Удалить</Button>
-    </>
+    </Space>
   );
 }
 

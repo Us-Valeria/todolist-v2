@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Flex, Radio, RadioChangeEvent } from "antd";
+import { css } from "@emotion/react";
 import TaskList from "./TaskList";
 import { useTasks } from "../stores/useTasks";
+
+const styles = {
+  content: css`
+    margin: 1% 2%;
+    @media (max-width: 720px) {
+      margin: 0;
+    }
+  `,
+  list: css`
+    margin-top: 2px;
+  `,
+};
 
 function FilterTaskList() {
   const tasks = useTasks((state) => state.tasks);
@@ -36,26 +49,17 @@ function FilterTaskList() {
   }, [tasks]);
 
   return (
-    <div
-      style={{
-        width: "80%",
-        marginLeft: "auto",
-        marginRight: "auto",
-      }}
-    >
-      <Flex gap="middle" align="center">
-        <Radio.Group
-          defaultValue={filter}
-          onChange={onChange}
-          buttonStyle="solid"
-        >
+    <div css={styles.content}>
+      <Flex gap="small" align="center">
+        <Radio.Group defaultValue={filter} onChange={onChange}>
           <Radio.Button value="all">Все</Radio.Button>
           <Radio.Button value="active">В процессе</Radio.Button>
           <Radio.Button value="completed">Завершенные</Radio.Button>
         </Radio.Group>
       </Flex>
-
-      <TaskList tasks={filteredTasks} />
+      <div css={styles.list}>
+        <TaskList tasks={filteredTasks} />
+      </div>
     </div>
   );
 }
