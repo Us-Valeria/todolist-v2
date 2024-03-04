@@ -1,5 +1,5 @@
 import React from "react";
-import { List } from "antd";
+import { List, Col, Row, GlobalToken, theme } from "antd";
 import TaskItem from "./TaskItem";
 import type { Task } from "../models/Task";
 import AddTask from "./AddTask";
@@ -8,32 +8,26 @@ import { css } from "@emotion/react";
 type Props = {
   tasks: Task[];
 };
-const styles = {
+const styles = (token: GlobalToken) => ({
   list: css`
     display: flex;
     flex-direction: column-reverse;
-    background-color: white;
-  `,
-  isNan: css`
-    margin-top: 1%;
-    display: flex;
-    flex-direction: row;
+    background-color: ${token.colorBorderBg};
   `,
   text: css`
-    text-align: center;
     font-size: 2rem;
-    color: #24295bc1;
+    color: ${token.colorTextLabel};
     text-transform: uppercase;
-    flex-basis: 85%;
   `,
-};
+});
 
 function TaskList({ tasks }: Props) {
+  const { token } = theme.useToken();
   return (
     <>
       {tasks && tasks.length > 0 ? (
         <List
-          css={styles.list}
+          css={styles(token).list}
           header={<AddTask />}
           size="large"
           bordered
@@ -45,10 +39,14 @@ function TaskList({ tasks }: Props) {
           )}
         />
       ) : (
-        <div css={styles.isNan}>
-          <AddTask />
-          <p css={styles.text}>Список пуст</p>
-        </div>
+        <Row>
+          <Col flex={2}>
+            <AddTask />
+          </Col>
+          <Col flex={3}>
+            <p css={styles(token).text}>Список пуст</p>
+          </Col>
+        </Row>
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Layout, GlobalToken, theme } from "antd";
+import { Typography, Layout, GlobalToken, theme, Col, Row } from "antd";
 import { Global, css } from "@emotion/react";
 import FilterTaskList from "./components/FilterTaskList";
 const { Header, Content } = Layout;
@@ -18,18 +18,17 @@ const styles = (token: GlobalToken) => ({
   body: css`
     display: flex;
     flex-direction: column;
+    margin-top: ${token.marginLG}px;
   `,
   title: css`
     color: white;
     font-size: ${token.fontSizeHeading3}px;
   `,
   text: css`
-    margin: 3% 7% 0;
     font-size: ${token.fontSizeHeading1}px;
     font-weight: ${token.fontWeightStrong};
     color: #000f94;
     @media (max-width: 720px) {
-      margin: 2% 25%;
       font-size: ${token.fontSizeHeading2}px;
     }
   `,
@@ -45,8 +44,16 @@ function App() {
           <Text css={styles(token).title}>To-Do</Text>
         </Header>
         <Content css={styles(token).body}>
-          <Text css={styles(token).text}>Мои планы:</Text>
-          <FilterTaskList />
+          <Row>
+            <Col span={12} offset={6}>
+              <Text css={styles(token).text}>Мои планы:</Text>
+            </Col>
+          </Row>
+          <Row justify={"center"}>
+            <Col xs={{ span: 24, offset: 0 }} lg={{ span: 22, offset: 0 }}>
+              <FilterTaskList />
+            </Col>
+          </Row>
         </Content>
       </Layout>
     </>
