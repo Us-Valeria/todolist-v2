@@ -15,18 +15,16 @@ export const useTasks = create(
     (set) => ({
       tasks: [],
       addTask: (text: string) => {
-        if (text.trim()) {
-          set((state) => ({
-            tasks: [
-              ...state.tasks,
-              {
-                id: String(Date.now()),
-                text: text,
-                completed: false,
-              },
-            ],
-          }));
-        }
+        set((state) => ({
+          tasks: [
+            ...state.tasks,
+            {
+              id: String(Date.now()),
+              text: text,
+              completed: false,
+            },
+          ],
+        }));
       },
 
       removeTask: (taskId) => {
