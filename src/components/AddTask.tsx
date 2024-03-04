@@ -15,23 +15,19 @@ function AddTask() {
   };
   const onChangeForm = (e: React.ChangeEvent<HTMLInputElement>) =>
     setTextTask(e.target.value);
-  return (
+  return isAdd ? (
     <>
-      {isAdd ? (
-        <>
-          <TaskForm
-            onFinish={onFinishForm}
-            value={textTask}
-            onChange={onChangeForm}
-          />
-        </>
-      ) : (
-        <>
-          <Button type="primary" onClick={() => setIsAdd(true)}>
-            +
-          </Button>
-        </>
-      )}
+      <TaskForm
+        onFinish={onFinishForm}
+        value={textTask}
+        onChange={onChangeForm}
+      />
+    </>
+  ) : (
+    <>
+      <Button type="primary" onClick={() => setIsAdd(true)}>
+        +
+      </Button>
     </>
   );
 }

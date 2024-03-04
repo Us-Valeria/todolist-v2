@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Checkbox, Typography, Space } from "antd";
+import { Checkbox, Typography, List } from "antd";
 import type { Task } from "../models/Task";
 import { useTasks } from "../stores/useTasks";
 import TaskForm from "./TaskForm";
@@ -23,12 +23,20 @@ function TaskItem({ task }: Props) {
     changeTextTask(e.target.value, task.id);
 
   return (
-    <Space>
-      <Checkbox
-        onChange={() => changeStatusTask(task.id)}
-        checked={task.completed}
-      />
-
+    <List.Item
+      actions={[
+        <Checkbox
+          key="edit-status-task"
+          onChange={() => changeStatusTask(task.id)}
+          checked={task.completed}
+        />,
+        <EditOutlined key="edit-task" onClick={() => setIsEditing(true)} />,
+        <DeleteOutlined
+          key="remove-task"
+          onClick={() => removeTask(task.id)}
+        />,
+      ]}
+    >
       {isEditing ? (
         <TaskForm
           onFinish={onFinishForm}
@@ -36,13 +44,9 @@ function TaskItem({ task }: Props) {
           onChange={onChangeForm}
         />
       ) : (
-        <>
-          <Text>{task.text}</Text>
-          <EditOutlined onClick={() => setIsEditing(true)} />
-          <DeleteOutlined onClick={() => removeTask(task.id)} />
-        </>
+        <List.Item.Meta title={<Text>{task.text}</Text>} />
       )}
-    </Space>
+    </List.Item>
   );
 }
 

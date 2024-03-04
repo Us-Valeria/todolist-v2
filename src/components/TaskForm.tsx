@@ -19,8 +19,12 @@ function TaskForm({ value, onChange, onFinish }: Props) {
         form.resetFields();
       }}
     >
-      <Form.Item name="text">
-        <Input type="text" defaultValue={value} onChange={onChange} />
+      <Form.Item
+        name="text"
+        initialValue={value}
+        rules={[{ required: true, whitespace: true, message: "Введите текст" }]}
+      >
+        <Input type="text" onChange={onChange} />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">

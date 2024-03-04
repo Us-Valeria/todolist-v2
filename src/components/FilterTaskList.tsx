@@ -3,6 +3,7 @@ import { Flex, GlobalToken, Radio, RadioChangeEvent, theme } from "antd";
 import { css } from "@emotion/react";
 import TaskList from "./TaskList";
 import { useTasks } from "../stores/useTasks";
+import AddTask from "./AddTask";
 
 const styles = (token: GlobalToken) => ({
   content: css`
@@ -10,6 +11,11 @@ const styles = (token: GlobalToken) => ({
   `,
   list: css`
     margin-top: ${token.marginXXS}px;
+  `,
+  input: css`
+    position: sticky;
+    min-height: ${token.controlHeightXS};
+    bottom: 0;
   `,
 });
 
@@ -58,6 +64,9 @@ function FilterTaskList() {
       </Flex>
       <div css={styles(token).list}>
         <TaskList tasks={filteredTasks} />
+      </div>
+      <div css={styles(token).input}>
+        <AddTask />
       </div>
     </div>
   );
