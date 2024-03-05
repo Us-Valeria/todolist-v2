@@ -6,29 +6,18 @@ import TaskForm from "./TaskForm";
 function AddTask() {
   const addTask = useTasks((state) => state.addTask);
   const [isAdd, setIsAdd] = useState(false);
-  const [textTask, setTextTask] = useState("");
 
-  const onFinishForm = () => {
-    addTask(textTask);
-    setTextTask("");
+  const onSave = (value: string) => {
+    addTask(value);
     setIsAdd(false);
   };
-  const onChangeForm = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setTextTask(e.target.value);
+
   return isAdd ? (
-    <>
-      <TaskForm
-        onFinish={onFinishForm}
-        value={textTask}
-        onChange={onChangeForm}
-      />
-    </>
+    <TaskForm onSave={onSave} />
   ) : (
-    <>
-      <Button type="primary" onClick={() => setIsAdd(true)}>
-        +
-      </Button>
-    </>
+    <Button type="primary" onClick={() => setIsAdd(true)}>
+      +
+    </Button>
   );
 }
 export default AddTask;

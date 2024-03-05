@@ -3,19 +3,19 @@ import { Button, Form, Input } from "antd";
 
 type Props = {
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onFinish: () => void;
+  onSave: (value: string) => void;
 };
 
-function TaskForm({ value, onChange, onFinish }: Props) {
+function TaskForm({ value, onSave }: Props) {
   const [form] = Form.useForm();
 
   return (
     <Form
       layout="inline"
       form={form}
+      autoComplete="off"
       onFinish={() => {
-        onFinish();
+        onSave(form.getFieldValue("text"));
         form.resetFields();
       }}
     >
@@ -24,7 +24,7 @@ function TaskForm({ value, onChange, onFinish }: Props) {
         initialValue={value}
         rules={[{ required: true, whitespace: true, message: "Введите текст" }]}
       >
-        <Input type="text" onChange={onChange} />
+        <Input type="text" />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
