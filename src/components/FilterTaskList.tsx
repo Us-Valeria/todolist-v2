@@ -15,7 +15,7 @@ const styles = (token: GlobalToken) => ({
   input: css`
     position: sticky;
     min-height: ${token.controlHeightXS};
-    bottom: 0;
+    bottom: 5px;
   `,
 });
 

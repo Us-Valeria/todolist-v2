@@ -19,14 +19,12 @@ const styles = (token: GlobalToken) => ({
 function App() {
   const { token } = theme.useToken();
   return (
-    <>
-      <Layout css={styles(token).page}>
-        <Content css={styles(token).body}>
-          <Title>Список задач</Title>
-          <FilterTaskList />
-        </Content>
-      </Layout>
-    </>
+    <Layout css={styles(token).page}>
+      <Content css={styles(token).body}>
+        <Title>Список задач</Title>
+        <FilterTaskList />
+      </Content>
+    </Layout>
   );
 }
 
