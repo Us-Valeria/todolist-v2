@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Checkbox, Typography, List } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import type { Task } from "../models/Task";
 import { useTasks } from "../stores/useTasks";
 import TaskForm from "./TaskForm";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 type Props = {
   task: Task;
@@ -20,7 +20,7 @@ function TaskItem({ task }: Props) {
 
   const onSave = (value: string) => {
     changeTextTask(value, task.id);
-    setIsEditing(false);
+    setIsEditing(!isEditing);
   };
 
   return (
@@ -31,7 +31,10 @@ function TaskItem({ task }: Props) {
           onChange={() => changeStatusTask(task.id)}
           checked={task.completed}
         />,
-        <EditOutlined key="edit-task" onClick={() => setIsEditing(true)} />,
+        <EditOutlined
+          key="edit-task"
+          onClick={() => setIsEditing(!isEditing)}
+        />,
         <DeleteOutlined
           key="remove-task"
           onClick={() => removeTask(task.id)}

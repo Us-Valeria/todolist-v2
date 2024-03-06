@@ -20,6 +20,8 @@ const styles = (token: GlobalToken) => ({
 });
 
 function FilterTaskList() {
+  const { token } = theme.useToken();
+
   const tasks = useTasks((state) => state.tasks);
   const [filteredTasks, setFilteredTasks] = useState(tasks);
   const [filter, setFilter] = useState("all");
@@ -51,11 +53,9 @@ function FilterTaskList() {
     filterTask(filter);
   }, [tasks]);
 
-  const { token } = theme.useToken();
-
   return (
     <div css={styles(token).content}>
-      <Flex gap="small" align="center">
+      <Flex gap="small">
         <Radio.Group defaultValue={filter} onChange={onChange}>
           <Radio.Button value="all">Все</Radio.Button>
           <Radio.Button value="active">В процессе</Radio.Button>

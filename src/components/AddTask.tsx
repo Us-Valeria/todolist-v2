@@ -9,13 +9,13 @@ function AddTask() {
 
   const onSave = (value: string) => {
     addTask(value);
-    setIsAdd(false);
+    setIsAdd(!isAdd);
   };
 
   return isAdd ? (
     <TaskForm onSave={onSave} />
   ) : (
-    <Button type="primary" onClick={() => setIsAdd(true)}>
+    <Button type="primary" onClick={() => setIsAdd(!isAdd)}>
       +
     </Button>
   );

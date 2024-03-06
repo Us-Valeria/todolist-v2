@@ -3,7 +3,7 @@ import { Button, Form, Input } from "antd";
 
 type Props = {
   value?: string;
-  onSave: (value: string) => void;
+  onSave: (text: string) => void;
 };
 
 function TaskForm({ value, onSave }: Props) {
@@ -14,8 +14,8 @@ function TaskForm({ value, onSave }: Props) {
       layout="inline"
       form={form}
       autoComplete="off"
-      onFinish={() => {
-        onSave(form.getFieldValue("text"));
+      onFinish={({ text }) => {
+        onSave(text);
         form.resetFields();
       }}
     >

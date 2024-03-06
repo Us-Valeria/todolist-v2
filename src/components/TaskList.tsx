@@ -15,19 +15,15 @@ const styles = {
 };
 
 function TaskList({ tasks }: Props) {
-  return (
-    <>
-      {tasks && tasks.length > 0 ? (
-        <List
-          css={styles.list}
-          size="large"
-          bordered
-          dataSource={tasks}
-          renderItem={(task) => <TaskItem key={task.id} task={task} />}
-        />
-      ) : null}
-    </>
-  );
+  return tasks && tasks.length > 0 ? (
+    <List
+      css={styles.list}
+      size="large"
+      bordered
+      dataSource={tasks}
+      renderItem={(task) => <TaskItem key={task.id} task={task} />}
+    />
+  ) : null;
 }
 
 export default TaskList;
