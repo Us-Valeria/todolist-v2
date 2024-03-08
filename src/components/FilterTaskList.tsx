@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Flex, GlobalToken, Radio, RadioChangeEvent, theme } from "antd";
-import { css } from "@emotion/react";
-import TaskList from "./TaskList";
-import { useTasks } from "../stores/useTasks";
-import AddTask from "./AddTask";
+import React, { useState, useMemo } from 'react';
+import type { GlobalToken, RadioChangeEvent } from 'antd';
+import { Radio, theme } from 'antd';
+import { css } from '@emotion/react';
+import TaskList from './TaskList';
+import useTasks from '../stores/useTasks';
+import AddTask from './AddTask';
+import type { FilterStatus } from '../models/FilterStatus';
+import { FILTER_STATUSES } from '../models/FilterStatus';
 
 const styles = (token: GlobalToken) => ({
   content: css`
@@ -12,62 +15,46 @@ const styles = (token: GlobalToken) => ({
   list: css`
     margin-top: ${token.marginXXS}px;
   `,
-  input: css`
-    position: sticky;
-    min-height: ${token.controlHeightXS};
-    bottom: 5px;
-  `,
 });
 
 function FilterTaskList() {
   const { token } = theme.useToken();
-
   const tasks = useTasks((state) => state.tasks);
-  const [filteredTasks, setFilteredTasks] = useState(tasks);
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState<FilterStatus>('ALL');
+
+  const filteredTasks = useMemo(() => {
+    if (!tasks) return [];
+    switch (filter) {
+      case 'ALL':
+        return tasks;
+      case 'ACTIVE':
+        return tasks.filter((task) => !task.completed);
+      case 'COMPLETED':
+        return tasks.filter((task) => task.completed);
+      default:
+        throw new Error(`Unknown status: ${filter}`);
+    }
+  }, [tasks, filter]);
 
   const onChange = (e: RadioChangeEvent) => {
-    setFilter(e.target.value);
-    filterTask(e.target.value);
+    setFilter(e.target.value as FilterStatus);
   };
-
-  const filterTask = (value: string) => {
-    if (tasks) {
-      switch (value) {
-        case "all": {
-          return setFilteredTasks(tasks);
-        }
-        case "active": {
-          return setFilteredTasks(tasks.filter((task) => !task.completed));
-        }
-        case "completed": {
-          return setFilteredTasks(tasks.filter((task) => task.completed));
-        }
-        default:
-          throw new Error("Unknown status: " + filter);
-      }
-    }
-  };
-
-  useEffect(() => {
-    filterTask(filter);
-  }, [tasks]);
 
   return (
     <div css={styles(token).content}>
-      <Flex gap="small">
-        <Radio.Group defaultValue={filter} onChange={onChange}>
-          <Radio.Button value="all">Все</Radio.Button>
-          <Radio.Button value="active">В процессе</Radio.Button>
-          <Radio.Button value="completed">Завершенные</Radio.Button>
-        </Radio.Group>
-      </Flex>
+      <Radio.Group value={filter} onChange={onChange}>
+        {Object.values(FILTER_STATUSES).map((status) => (
+          <Radio.Button key={status} value={status}>
+            {status === 'ALL' && 'Все'}
+            {status === 'ACTIVE' && 'В процессе'}
+            {status === 'COMPLETED' && 'Завершенные'}
+          </Radio.Button>
+        ))}
+      </Radio.Group>
       <div css={styles(token).list}>
         <TaskList tasks={filteredTasks} />
       </div>
-      <div css={styles(token).input}>
-        <AddTask />
-      </div>
+      <AddTask />
     </div>
   );
 }
