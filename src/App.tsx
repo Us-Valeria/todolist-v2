@@ -1,8 +1,9 @@
-import React from "react";
-import { Layout, GlobalToken, theme, Typography } from "antd";
-import "antd/dist/reset.css";
-import { css } from "@emotion/react";
-import FilterTaskList from "./components/FilterTaskList";
+import React from 'react';
+import type { GlobalToken } from 'antd';
+import { Layout, theme, Typography } from 'antd';
+import 'antd/dist/reset.css';
+import { css } from '@emotion/react';
+import FilterTaskList from './components/FilterTaskList';
 
 const { Content } = Layout;
 const { Title } = Typography;
