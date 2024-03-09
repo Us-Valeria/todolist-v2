@@ -1,27 +1,33 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { Task } from "../models/Task";
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import dayjs from 'dayjs';
+import type { Task } from '../models/Task';
 
 type TasksStore = {
   tasks: Task[];
-  addTask: (text: string) => void;
+  addTask: (title: string) => void;
   removeTask: (taskId: string) => void;
-  changeTextTask: (value: string, taskId: string) => void;
+  changeTask: (
+    values: { title: string; description: string },
+    taskId: string,
+  ) => void;
   changeStatusTask: (taskId: string) => void;
 };
 
-export const useTasks = create(
+const useTasks = create(
   persist<TasksStore>(
     (set) => ({
       tasks: [],
-      addTask: (text: string) => {
+      addTask: (title: string) => {
         set((state) => ({
           tasks: [
             ...state.tasks,
             {
               id: String(Date.now()),
-              text: text,
+              title,
+              description: '',
               completed: false,
+              created: dayjs().format(),
             },
           ],
         }));
@@ -33,14 +39,17 @@ export const useTasks = create(
         }));
       },
 
-      changeTextTask: (value, taskId) => {
+      changeTask: (values, taskId) => {
         set((state) => ({
           tasks: state.tasks.map((task) => {
             if (task.id === taskId) {
-              return { ...task, text: value.trim() };
-            } else {
-              return task;
+              return {
+                ...task,
+                title: values.title,
+                description: values.description,
+              };
             }
+            return task;
           }),
         }));
       },
@@ -50,13 +59,14 @@ export const useTasks = create(
           tasks: state.tasks.map((task) => {
             if (task.id === taskId) {
               return { ...task, completed: !task.completed };
-            } else {
-              return task;
             }
+            return task;
           }),
         }));
       },
     }),
-    { name: "task", getStorage: () => localStorage }
-  )
+    { name: 'task', storage: createJSONStorage(() => localStorage) },
+  ),
 );
+
+export default useTasks;

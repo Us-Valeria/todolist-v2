@@ -1,12 +1,13 @@
-import React from "react";
-import { List } from "antd";
-import TaskItem from "./TaskItem";
-import type { Task } from "../models/Task";
-import { css } from "@emotion/react";
+import React from 'react';
+import { List } from 'antd';
+import { css } from '@emotion/react';
+import TaskItem from './TaskItem';
+import type { Task } from '../models/Task';
 
 type Props = {
   tasks: Task[];
 };
+
 const styles = {
   list: css`
     display: flex;
@@ -15,15 +16,16 @@ const styles = {
 };
 
 function TaskList({ tasks }: Props) {
-  return tasks && tasks.length > 0 ? (
+  return (
     <List
       css={styles.list}
       size="large"
       bordered
       dataSource={tasks}
       renderItem={(task) => <TaskItem key={task.id} task={task} />}
+      locale={{ emptyText: 'Список пуст' }}
     />
-  ) : null;
+  );
 }
 
 export default TaskList;

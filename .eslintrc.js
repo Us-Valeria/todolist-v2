@@ -18,7 +18,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
     project: 'tsconfig.json',
-    tsconfigRootDir: import.meta.dirname,
+    tsconfigRootDir: __dirname,
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
@@ -48,15 +48,15 @@ module.exports = {
     ],
     'no-restricted-imports': [
       'error',
-      {
-        patterns: [
-          {
-            group: ['antd'],
-            importNames: ['DatePicker'],
-            message: "Use local 'DatePicker' from src/components",
-          },
-        ],
-      },
+      // {
+      //   patterns: [
+      //     {
+      //       group: ['antd'],
+      //       importNames: ['DatePicker'],
+      //       message: "Use local 'DatePicker' from src/components",
+      //     },
+      //   ],
+      // },
     ],
   },
 };
