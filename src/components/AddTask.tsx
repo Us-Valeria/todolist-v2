@@ -7,7 +7,7 @@ import useTasks from '../stores/useTasks';
 
 const style = (token: GlobalToken) => ({
   form: css`
-    margin-bottom: ${token.marginLG}px;
+    margin-bottom: ${token.marginSM}px;
   `,
   input: css`
     width: 100%;

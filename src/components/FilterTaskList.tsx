@@ -1,31 +1,15 @@
 import React, { useState, useMemo } from 'react';
-import type { GlobalToken, RadioChangeEvent } from 'antd';
-import { Radio, theme } from 'antd';
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import type { RadioChangeEvent } from 'antd';
+import { Radio } from 'antd';
 import TaskList from './TaskList';
 import useTasks from '../stores/useTasks';
 import AddTask from './AddTask';
 import { FILTER_STATUSES } from '../models/FilterStatus';
 import type { FilterStatus } from '../models/FilterStatus';
 
-const styles = (token: GlobalToken) => ({
-  content: css`
-    margin-top: ${token.marginLG}px;
-  `,
-  list: css`
-    margin-top: ${token.marginXXS}px;
-  `,
-});
-
 function FilterTaskList() {
-  const { token } = theme.useToken();
   const tasks = useTasks((state) => state.tasks);
   const [filter, setFilter] = useState<FilterStatus>('ALL');
-
-  const StyledTaskList = styled(TaskList)`
-    ${styles(token).list}
-  `;
 
   const filteredTasks = useMemo(() => {
     if (!tasks) return [];
@@ -46,7 +30,7 @@ function FilterTaskList() {
   };
 
   return (
-    <div css={styles(token).content}>
+    <>
       <AddTask />
       <Radio.Group value={filter} onChange={onChange}>
         {Object.values(FILTER_STATUSES).map((status) => (
@@ -57,8 +41,8 @@ function FilterTaskList() {
           </Radio.Button>
         ))}
       </Radio.Group>
-      <StyledTaskList tasks={filteredTasks} />
-    </div>
+      <TaskList tasks={filteredTasks} />
+    </>
   );
 }
 
