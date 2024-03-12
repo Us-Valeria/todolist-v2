@@ -12,12 +12,15 @@ const style = (token: GlobalToken) => ({
   input: css`
     width: 100%;
   `,
+  icon: css`
+    color: ${token.colorIcon};
+  `,
 });
 
 function AddTask() {
+  const { token } = theme.useToken();
   const addTask = useTasks((state) => state.addTask);
   const [form] = Form.useForm();
-  const { token } = theme.useToken();
   return (
     <Form
       layout="inline"
@@ -36,7 +39,7 @@ function AddTask() {
       >
         <Input
           type="title"
-          prefix={<PlusOutlined />}
+          prefix={<PlusOutlined css={style(token).icon} />}
           placeholder="Добавить задачу"
         />
       </Form.Item>
