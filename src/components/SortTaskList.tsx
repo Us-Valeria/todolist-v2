@@ -32,7 +32,7 @@ function SortTaskList({ setSortKey, setSortDirection }: Props) {
       label: 'По дате создания',
       onClick: () => {
         setSortKey('date');
-        setSortDirection('OLDER');
+        setSortDirection('UNDER');
       },
     },
   ];
