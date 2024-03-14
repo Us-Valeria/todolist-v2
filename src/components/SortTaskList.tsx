@@ -2,37 +2,34 @@ import React from 'react';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import type { DirectionStatus } from '../models/DirectionStatus';
+import {
+  DIRECTION_STATUSES,
+  type DirectionStatus,
+} from '../models/DirectionStatus';
+import type { SortedKey } from '../models/SortKey';
+import { SORTED_KEY } from '../models/SortKey';
 
 type Props = {
-  setSortKey: (value: string) => void;
+  setSortKey: (value: SortedKey) => void;
   setSortDirection: (value: DirectionStatus) => void;
 };
 
 function SortTaskList({ setSortKey, setSortDirection }: Props) {
   const items: MenuProps['items'] = [
     {
-      key: 'default',
-      label: 'По умолчанию',
-      onClick: () => {
-        setSortKey('default');
-        setSortDirection('FALSE');
-      },
-    },
-    {
       key: 'title',
       label: 'По алфавиту',
       onClick: () => {
-        setSortKey('title');
-        setSortDirection('UNDER');
+        setSortKey(SORTED_KEY.TITLE);
+        setSortDirection(DIRECTION_STATUSES.ASC);
       },
     },
     {
       key: 'date',
       label: 'По дате создания',
       onClick: () => {
-        setSortKey('date');
-        setSortDirection('UNDER');
+        setSortKey(SORTED_KEY.DATE);
+        setSortDirection(DIRECTION_STATUSES.ASC);
       },
     },
   ];
