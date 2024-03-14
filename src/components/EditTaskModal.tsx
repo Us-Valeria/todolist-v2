@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Input, Form } from 'antd';
+import { Modal, Input, Form, Button } from 'antd';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ru';
@@ -13,33 +13,46 @@ const { TextArea } = Input;
 type Props = {
   task: Task;
   isEditing: boolean;
-  setIsEditing: (value: boolean) => void;
+  onClose: () => void;
 };
 
-function EditTaskModal({ task, isEditing, setIsEditing }: Props) {
+function EditTaskModal({ task, isEditing, onClose }: Props) {
   const [form] = Form.useForm();
   const changeTask = useTasks((state) => state.changeTask);
+  const removeTask = useTasks((state) => state.removeTask);
 
   const handleSave = () => {
     form.validateFields().then((values) => {
       changeTask(values, task.id);
       form.resetFields();
-      setIsEditing(false);
+      onClose();
     });
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
   };
 
   return (
     <Modal
       title="Редактирование"
       open={isEditing}
-      onOk={handleSave}
-      onCancel={handleCancel}
       okText="OK"
       cancelText="Отменить"
+      footer={[
+        <Button
+          key="remove"
+          onClick={() => {
+            removeTask(task.id);
+            onClose();
+          }}
+          danger
+        >
+          Удалить
+        </Button>,
+        <Button key="cancel" onClick={onClose}>
+          Отменить
+        </Button>,
+        <Button key="save" type="primary" onClick={handleSave}>
+          Сохранить
+        </Button>,
+      ]}
     >
       <Form form={form} onFinish={handleSave}>
         <Form.Item

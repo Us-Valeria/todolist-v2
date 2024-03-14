@@ -3,7 +3,6 @@ import { Checkbox, Typography, List, Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import type { Task } from '../models/Task';
 import useTasks from '../stores/useTasks';
-import RemoveTask from './RemoveTask';
 import EditTaskModal from './EditTaskModal';
 
 type Props = {
@@ -30,7 +29,6 @@ function TaskItem({ task }: Props) {
             icon={<EditOutlined />}
             onClick={handleEditClick}
           />,
-          <RemoveTask id={task.id} key="remove-task" />,
         ]}
       >
         <List.Item.Meta
@@ -41,13 +39,7 @@ function TaskItem({ task }: Props) {
               checked={task.completed}
             />
           }
-          title={
-            task.completed ? (
-              <Text delete>{task.title}</Text>
-            ) : (
-              <Text>{task.title}</Text>
-            )
-          }
+          title={<Text delete={task.completed}>{task.title}</Text>}
           description={task.description}
         />
       </List.Item>
@@ -55,7 +47,7 @@ function TaskItem({ task }: Props) {
         <EditTaskModal
           task={task}
           isEditing={isEditing}
-          setIsEditing={setIsEditing}
+          onClose={() => setIsEditing(false)}
         />
       )}
     </>
