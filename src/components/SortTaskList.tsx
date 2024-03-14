@@ -17,7 +17,7 @@ type Props = {
 function SortTaskList({ setSortKey, setSortDirection }: Props) {
   const items: MenuProps['items'] = [
     {
-      key: 'title',
+      key: SORTED_KEY.TITLE,
       label: 'По алфавиту',
       onClick: () => {
         setSortKey(SORTED_KEY.TITLE);
@@ -25,7 +25,7 @@ function SortTaskList({ setSortKey, setSortDirection }: Props) {
       },
     },
     {
-      key: 'date',
+      key: SORTED_KEY.DATE,
       label: 'По дате создания',
       onClick: () => {
         setSortKey(SORTED_KEY.DATE);
