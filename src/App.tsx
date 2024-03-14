@@ -3,10 +3,14 @@ import type { GlobalToken } from 'antd';
 import { Layout, theme, Typography } from 'antd';
 import 'antd/dist/reset.css';
 import { css } from '@emotion/react';
+import dayjs from 'dayjs';
+
 import AddTask from './components/AddTask';
 import ListManager from './components/ListManager';
 import TaskList from './components/TaskList';
 import useTasks from './stores/useTasks';
+
+dayjs.locale('ru');
 
 const { Content } = Layout;
 const { Title } = Typography;

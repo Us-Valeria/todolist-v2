@@ -6,7 +6,6 @@ import 'dayjs/locale/ru';
 import useTasks from '../stores/useTasks';
 import type { Task } from '../models/Task';
 
-dayjs.locale('ru');
 dayjs.extend(relativeTime);
 
 const { TextArea } = Input;
@@ -39,6 +38,8 @@ function EditTaskModal({ task, isEditing, setIsEditing }: Props) {
       open={isEditing}
       onOk={handleSave}
       onCancel={handleCancel}
+      okText="OK"
+      cancelText="Отменить"
     >
       <Form form={form} onFinish={handleSave}>
         <Form.Item
