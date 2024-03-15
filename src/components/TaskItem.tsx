@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox, Typography, List, Button } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import { Checkbox, Typography, List } from 'antd';
 import type { Task } from '../models/Task';
 import useTasks from '../stores/useTasks';
 import EditTaskModal from './EditTaskModal';
@@ -21,16 +20,7 @@ function TaskItem({ task }: Props) {
 
   return (
     <>
-      <List.Item
-        actions={[
-          <Button
-            shape="circle"
-            key="edit-task"
-            icon={<EditOutlined />}
-            onClick={handleEditClick}
-          />,
-        ]}
-      >
+      <List.Item onClick={handleEditClick}>
         <List.Item.Meta
           avatar={
             <Checkbox
