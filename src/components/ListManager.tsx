@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Flex } from 'antd';
 import useTasks from '../stores/useTasks';
-import { FILTER_STATUSES, type FilterStatus } from '../models/FilterStatus';
+import { FILTERS, type Filters } from '../models/Filters';
 import useFilter from '../hooks/useFilter';
 import useSort from '../hooks/useSort';
 import useSortDirection from '../hooks/useSortDirection';
-import {
-  DIRECTION_STATUSES,
-  type DirectionStatus,
-} from '../models/DirectionStatus';
+import { SORTED_DIRECTION, type SortDirection } from '../models/SortDirection';
 import SortTaskList from './SortTaskList';
 import SortDirectionList from './SortDirectionList';
 import FilterTaskList from './FilterTaskList';
@@ -22,10 +19,10 @@ type Props = {
 
 function ListManager({ setList }: Props) {
   const tasks = useTasks((state) => state.tasks);
-  const [filter, setFilter] = useState<FilterStatus>(FILTER_STATUSES.ALL);
+  const [filter, setFilter] = useState<Filters>(FILTERS.ALL);
   const [sortKey, setSortKey] = useState<SortedKey>(SORTED_KEY.DEFAULT);
-  const [sortDirection, setSortDirection] = useState<DirectionStatus>(
-    DIRECTION_STATUSES.NULL,
+  const [sortDirection, setSortDirection] = useState<SortDirection>(
+    SORTED_DIRECTION.ASC,
   );
 
   const filteredTasks = useFilter(tasks, filter);
@@ -45,10 +42,7 @@ function ListManager({ setList }: Props) {
         sortKey={sortKey}
         setSortKey={setSortKey}
       />
-      <SortTaskList
-        setSortKey={setSortKey}
-        setSortDirection={setSortDirection}
-      />
+      <SortTaskList setSortKey={setSortKey} />
     </Flex>
   );
 }

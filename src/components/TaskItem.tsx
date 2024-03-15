@@ -34,11 +34,7 @@ function TaskItem({ task }: Props) {
         />
       </List.Item>
       {isEditing && (
-        <EditTaskModal
-          task={task}
-          isEditing={isEditing}
-          onClose={() => setIsEditing(false)}
-        />
+        <EditTaskModal task={task} onClose={() => setIsEditing(false)} />
       )}
     </>
   );

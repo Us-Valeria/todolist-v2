@@ -12,11 +12,10 @@ const { TextArea } = Input;
 
 type Props = {
   task: Task;
-  isEditing: boolean;
   onClose: () => void;
 };
 
-function EditTaskModal({ task, isEditing, onClose }: Props) {
+function EditTaskModal({ task, onClose }: Props) {
   const [form] = Form.useForm();
   const changeTask = useTasks((state) => state.changeTask);
   const removeTask = useTasks((state) => state.removeTask);
@@ -32,9 +31,11 @@ function EditTaskModal({ task, isEditing, onClose }: Props) {
   return (
     <Modal
       title="Редактирование"
-      open={isEditing}
+      open
+      closable
       okText="OK"
       cancelText="Отменить"
+      onCancel={onClose}
       footer={[
         <Button
           key="remove"

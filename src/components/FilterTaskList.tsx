@@ -1,12 +1,12 @@
 import React from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Radio } from 'antd';
-import type { FilterStatus } from '../models/FilterStatus';
-import { FILTER_STATUSES } from '../models/FilterStatus';
+import type { Filters } from '../models/Filters';
+import { FILTERS } from '../models/Filters';
 
 type Props = {
-  filter: FilterStatus;
-  setFilter: (value: FilterStatus) => void;
+  filter: Filters;
+  setFilter: (value: Filters) => void;
 };
 
 function FilterTaskList({ filter, setFilter }: Props) {
@@ -16,7 +16,7 @@ function FilterTaskList({ filter, setFilter }: Props) {
 
   return (
     <Radio.Group value={filter} onChange={onChange}>
-      {Object.values(FILTER_STATUSES).map((status) => (
+      {Object.values(FILTERS).map((status) => (
         <Radio.Button key={status} value={status}>
           {status === 'ALL' && 'Все'}
           {status === 'ACTIVE' && 'В процессе'}

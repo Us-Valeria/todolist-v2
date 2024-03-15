@@ -1,12 +1,13 @@
 import React from 'react';
-import { CloseOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
+import {
+  CloseOutlined,
+  SortAscendingOutlined,
+  SortDescendingOutlined,
+} from '@ant-design/icons';
 import type { GlobalToken } from 'antd';
 import { Button, Space, Typography, theme } from 'antd';
 import { css } from '@emotion/react';
-import {
-  DIRECTION_STATUSES,
-  type DirectionStatus,
-} from '../models/DirectionStatus';
+import { SORTED_DIRECTION, type SortDirection } from '../models/SortDirection';
 import { SORTED_KEY, type SortedKey } from '../models/SortKey';
 
 const { Text } = Typography;
@@ -22,7 +23,7 @@ const style = (token: GlobalToken) => ({
 
 type Props = {
   sortDirection: string;
-  setSortDirection: (value: DirectionStatus) => void;
+  setSortDirection: (value: SortDirection) => void;
   sortKey: string;
   setSortKey: (value: SortedKey) => void;
 };
@@ -36,20 +37,19 @@ function SortDirectionList({
   const { token } = theme.useToken();
   return (
     <>
-      {(sortDirection === DIRECTION_STATUSES.DESK ||
-        sortDirection === DIRECTION_STATUSES.ASC) && (
+      {sortKey !== SORTED_KEY.DEFAULT && (
         <Space>
-          {sortDirection === DIRECTION_STATUSES.DESK ? (
+          {sortDirection === SORTED_DIRECTION.DESK ? (
             <Button
               type="link"
-              onClick={() => setSortDirection(DIRECTION_STATUSES.ASC)}
-              icon={<UpOutlined css={style(token).icon} />}
+              onClick={() => setSortDirection(SORTED_DIRECTION.ASC)}
+              icon={<SortDescendingOutlined css={style(token).icon} />}
             />
           ) : (
             <Button
               type="link"
-              onClick={() => setSortDirection(DIRECTION_STATUSES.DESK)}
-              icon={<DownOutlined css={style(token).icon} />}
+              onClick={() => setSortDirection(SORTED_DIRECTION.DESK)}
+              icon={<SortAscendingOutlined css={style(token).icon} />}
             />
           )}
           <Text css={style(token).text}>
@@ -59,14 +59,14 @@ function SortDirectionList({
           <Button
             type="link"
             onClick={() => {
-              setSortDirection(DIRECTION_STATUSES.NULL);
+              setSortDirection(SORTED_DIRECTION.ASC);
               setSortKey(SORTED_KEY.DEFAULT);
             }}
             icon={<CloseOutlined css={style(token).icon} />}
           />
         </Space>
       )}
-      {sortDirection === DIRECTION_STATUSES.NULL && null}
+      {sortKey === SORTED_KEY.DEFAULT && null}
     </>
   );
 }
