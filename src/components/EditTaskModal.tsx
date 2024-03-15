@@ -32,7 +32,6 @@ function EditTaskModal({ task, onClose }: Props) {
     <Modal
       title="Редактирование"
       open
-      closable
       okText="OK"
       cancelText="Отменить"
       onCancel={onClose}
