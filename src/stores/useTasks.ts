@@ -68,5 +68,4 @@ const useTasks = create(
     { name: 'task', storage: createJSONStorage(() => localStorage) },
   ),
 );
-
 export default useTasks;

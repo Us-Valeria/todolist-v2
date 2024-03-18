@@ -8,7 +8,7 @@ const useSortDirection = (tasks: Task[], sortDirection: string) => {
     switch (sortDirection) {
       case SORTED_DIRECTION.ASC:
         return [...tasks];
-      case SORTED_DIRECTION.DESK:
+      case SORTED_DIRECTION.DESC:
         return [...tasks].reverse();
       default:
         throw new Error(`Unknown sorting order: ${sortDirection}`);

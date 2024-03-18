@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { Task } from '../models/Task';
 
-const useFilter = (tasks: Task[], filter: string) => {
+const useFilterTasks = (tasks: Task[], filter: string) => {
   const filteredTasks = useMemo(() => {
     if (!tasks) return [];
     switch (filter) {
@@ -18,4 +18,4 @@ const useFilter = (tasks: Task[], filter: string) => {
   return filteredTasks;
 };
 
-export default useFilter;
+export default useFilterTasks;

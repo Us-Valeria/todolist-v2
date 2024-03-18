@@ -25,6 +25,7 @@ function TaskItem({ task }: Props) {
           avatar={
             <Checkbox
               key="edit-status-task"
+              onClick={(e) => e.stopPropagation()}
               onChange={() => changeStatusTask(task.id)}
               checked={task.completed}
             />

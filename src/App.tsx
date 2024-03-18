@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
 import type { GlobalToken } from 'antd';
-import { Layout, theme, Typography } from 'antd';
+import { Flex, Layout, theme, Typography } from 'antd';
 import 'antd/dist/reset.css';
 import { css } from '@emotion/react';
 import dayjs from 'dayjs';
-
 import AddTask from './components/AddTask';
-import ListManager from './components/ListManager';
 import TaskList from './components/TaskList';
-import useTasks from './stores/useTasks';
+import FilterTaskList from './components/FilterTaskList';
+import SelectedSort from './components/SelectedSort';
 
 dayjs.locale('ru');
 
@@ -26,15 +24,17 @@ const styles = (token: GlobalToken) => ({
 
 function App() {
   const { token } = theme.useToken();
-  const tasks = useTasks((state) => state.tasks);
-  const [list, setList] = useState(tasks);
+
   return (
     <Layout css={styles(token).page}>
       <Content css={styles(token).body}>
         <Title>Список задач</Title>
         <AddTask />
-        <ListManager setList={setList} />
-        <TaskList tasks={list} />
+        <Flex justify="space-between">
+          <FilterTaskList />
+          <SelectedSort />
+        </Flex>
+        <TaskList />
       </Content>
     </Layout>
   );

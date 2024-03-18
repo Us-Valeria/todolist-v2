@@ -1,15 +1,11 @@
 import React from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Radio } from 'antd';
-import type { Filters } from '../models/Filters';
 import { FILTERS } from '../models/Filters';
+import useFilter from '../stores/useFilter';
 
-type Props = {
-  filter: Filters;
-  setFilter: (value: Filters) => void;
-};
-
-function FilterTaskList({ filter, setFilter }: Props) {
+function FilterTaskList() {
+  const { filter, setFilter } = useFilter();
   const onChange = (e: RadioChangeEvent) => {
     setFilter(e.target.value);
   };

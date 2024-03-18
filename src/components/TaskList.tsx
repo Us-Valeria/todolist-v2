@@ -3,11 +3,12 @@ import type { GlobalToken } from 'antd';
 import { List, theme } from 'antd';
 import { css } from '@emotion/react';
 import TaskItem from './TaskItem';
-import type { Task } from '../models/Task';
-
-type Props = {
-  tasks: Task[];
-};
+import useFilterTasks from '../hooks/useFilterTasks';
+import useFilter from '../stores/useFilter';
+import useTasks from '../stores/useTasks';
+import useSelectedSort from '../stores/useSelectedSort';
+import useSort from '../hooks/useSort';
+import useSortDirection from '../hooks/useSortDirection';
 
 const styles = (token: GlobalToken) => ({
   list: css`
@@ -19,14 +20,23 @@ const styles = (token: GlobalToken) => ({
   `,
 });
 
-function TaskList({ tasks }: Props) {
+function TaskList() {
   const { token } = theme.useToken();
+
+  const tasks = useTasks((state) => state.tasks);
+  const { filter } = useFilter();
+  const { sortKey } = useSelectedSort();
+  const { direction } = useSelectedSort();
+
+  const filteredTaskList = useFilterTasks(tasks, filter);
+  const sortedList = useSort(filteredTaskList, sortKey);
+  const sortDirectionList = useSortDirection(sortedList, direction);
   return (
     <List
       css={styles(token).list}
       size="large"
       bordered
-      dataSource={tasks}
+      dataSource={sortDirectionList}
       renderItem={(task) => <TaskItem key={task.id} task={task} />}
       locale={{ emptyText: 'Список пуст' }}
     />
