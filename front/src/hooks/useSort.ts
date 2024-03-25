@@ -11,7 +11,7 @@ const useSort = (tasks: Task[], sortKey: string) => {
         return tasks;
       case SORTED_KEY.DATE:
         return [...tasks].sort((a, b) =>
-          dayjs(a.created).diff(dayjs(b.created)),
+          dayjs(a.createdAt).diff(dayjs(b.createdAt)),
         );
       case SORTED_KEY.TITLE:
         return [...tasks].sort((a, b) => a.title.localeCompare(b.title));

@@ -12,7 +12,7 @@ const { Text } = Typography;
 
 function TaskItem({ task }: Props) {
   const [isEditing, setIsEditing] = useState(false);
-  const changeStatusTask = useTasks((state) => state.changeStatusTask);
+  const changeTask = useTasks((state) => state.changeTask);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -26,12 +26,21 @@ function TaskItem({ task }: Props) {
             <Checkbox
               key="edit-status-task"
               onClick={(e) => e.stopPropagation()}
-              onChange={() => changeStatusTask(task.id)}
+              onChange={() =>
+                changeTask(
+                  {
+                    completed: !task.completed,
+                    title: task.title,
+                    text: task.text,
+                  },
+                  task.id,
+                )
+              }
               checked={task.completed}
             />
           }
           title={<Text delete={task.completed}>{task.title}</Text>}
-          description={task.description}
+          description={task.text}
         />
       </List.Item>
       {isEditing && (

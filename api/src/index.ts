@@ -18,7 +18,7 @@ app.use(cors());
 app.get("/", TaskController.getAll);
 app.post("/", TaskController.create);
 app.delete("/:id", TaskController.remove);
-app.patch("/:id", TaskController.update);
+app.put("/:id", TaskController.update);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

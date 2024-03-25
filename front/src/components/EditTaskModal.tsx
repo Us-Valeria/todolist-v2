@@ -22,7 +22,7 @@ function EditTaskModal({ task, onClose }: Props) {
 
   const handleSave = () => {
     form.validateFields().then((values) => {
-      changeTask(values, task.id);
+      changeTask({ ...values, completed: task.completed }, task.id);
       form.resetFields();
       onClose();
     });
@@ -30,8 +30,8 @@ function EditTaskModal({ task, onClose }: Props) {
 
   return (
     <Modal
-      title="Редактирование"
       open
+      title="Редактирование"
       okText="OK"
       cancelText="Отменить"
       onCancel={onClose}
@@ -69,8 +69,8 @@ function EditTaskModal({ task, onClose }: Props) {
           <Input type="text" />
         </Form.Item>
         <Form.Item
-          name="description"
-          initialValue={task.description}
+          name="text"
+          initialValue={task.text}
           rules={[
             {
               whitespace: true,
@@ -80,7 +80,7 @@ function EditTaskModal({ task, onClose }: Props) {
           <TextArea />
         </Form.Item>
       </Form>
-      <p>Добавлено: {dayjs(task.created).fromNow()}</p>
+      <p>Изменено: {dayjs(task.createdAt).fromNow()}</p>
     </Modal>
   );
 }

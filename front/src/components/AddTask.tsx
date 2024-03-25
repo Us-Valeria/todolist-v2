@@ -19,7 +19,7 @@ const style = (token: GlobalToken) => ({
 
 function AddTask() {
   const { token } = theme.useToken();
-  const addTask = useTasks((state) => state.addTask);
+  const createTask = useTasks((state) => state.createTask);
   const [form] = Form.useForm();
   return (
     <Form
@@ -28,7 +28,7 @@ function AddTask() {
       form={form}
       autoComplete="off"
       onFinish={({ title }) => {
-        addTask(title);
+        createTask(title);
         form.resetFields();
       }}
     >

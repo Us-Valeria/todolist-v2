@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { GlobalToken } from 'antd';
 import { List, theme } from 'antd';
 import { css } from '@emotion/react';
@@ -23,7 +23,12 @@ const styles = (token: GlobalToken) => ({
 function TaskList() {
   const { token } = theme.useToken();
 
-  const tasks = useTasks((state) => state.tasks);
+  const { fetchTasks, tasks, loading } = useTasks();
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
+
   const { filter } = useFilter();
   const { sortKey } = useSelectedSort();
   const { direction } = useSelectedSort();
@@ -36,6 +41,7 @@ function TaskList() {
       css={styles(token).list}
       size="large"
       bordered
+      loading={loading}
       dataSource={sortDirectionList}
       renderItem={(task) => <TaskItem key={task.id} task={task} />}
       locale={{ emptyText: 'Список пуст' }}
