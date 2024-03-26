@@ -33,11 +33,12 @@ const useTasks = create<TasksStore>((set) => ({
   removeTask: async (taskId: string) => {
     try {
       await axios.delete(`/${taskId}`);
-      set((state) => ({
-        tasks: state.tasks.filter((task) => task.id !== taskId),
-      }));
     } catch (error) {
       throw new Error('Failed to delete tasks');
+    } finally {
+      set((state) => ({
+        tasks: state.tasks.filter((task) => task._id !== taskId),
+      }));
     }
   },
 
@@ -47,7 +48,7 @@ const useTasks = create<TasksStore>((set) => ({
       const updatedItem = res.data;
       set((state) => ({
         tasks: state.tasks.map((task) =>
-          task.id === taskId ? updatedItem : task,
+          task._id === taskId ? updatedItem : task,
         ),
       }));
     } catch (error) {

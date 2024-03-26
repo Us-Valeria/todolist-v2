@@ -26,16 +26,16 @@ function TaskItem({ task }: Props) {
             <Checkbox
               key="edit-status-task"
               onClick={(e) => e.stopPropagation()}
-              onChange={() =>
+              onChange={() => {
                 changeTask(
                   {
                     completed: !task.completed,
                     title: task.title,
                     text: task.text,
                   },
-                  task.id,
-                )
-              }
+                  task._id,
+                );
+              }}
               checked={task.completed}
             />
           }

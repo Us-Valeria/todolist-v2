@@ -30,8 +30,7 @@ function TaskList() {
   }, [fetchTasks]);
 
   const { filter } = useFilter();
-  const { sortKey } = useSelectedSort();
-  const { direction } = useSelectedSort();
+  const { sortKey, direction } = useSelectedSort();
 
   const filteredTaskList = useFilterTasks(tasks, filter);
   const sortedList = useSort(filteredTaskList, sortKey);
@@ -43,7 +42,7 @@ function TaskList() {
       bordered
       loading={loading}
       dataSource={sortDirectionList}
-      renderItem={(task) => <TaskItem key={task.id} task={task} />}
+      renderItem={(task) => <TaskItem key={task._id} task={task} />}
       locale={{ emptyText: 'Список пуст' }}
     />
   );

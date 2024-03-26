@@ -4,11 +4,7 @@ import { Request, Response } from "express";
 export const getAll = async (req: Request, res: Response) => {
   try {
     const tasks = await Task.find();
-    const responseTask = tasks.map((task) => ({
-      ...task.toObject(),
-      id: task._id,
-    }));
-    res.json(responseTask);
+    res.json(tasks);
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -71,7 +67,7 @@ export const update = async (req: Request, res: Response) => {
     }
 
     res.json({
-      id: taskId,
+      _id: taskId,
       title: req.body.title,
       text: req.body.text,
       completed: req.body.completed,

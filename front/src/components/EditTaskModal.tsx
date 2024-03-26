@@ -17,12 +17,11 @@ type Props = {
 
 function EditTaskModal({ task, onClose }: Props) {
   const [form] = Form.useForm();
-  const changeTask = useTasks((state) => state.changeTask);
-  const removeTask = useTasks((state) => state.removeTask);
+  const { changeTask, removeTask } = useTasks();
 
   const handleSave = () => {
     form.validateFields().then((values) => {
-      changeTask({ ...values, completed: task.completed }, task.id);
+      changeTask({ ...values, completed: task.completed }, task._id);
       form.resetFields();
       onClose();
     });
@@ -39,7 +38,7 @@ function EditTaskModal({ task, onClose }: Props) {
         <Button
           key="remove"
           onClick={() => {
-            removeTask(task.id);
+            removeTask(task._id);
             onClose();
           }}
           danger
