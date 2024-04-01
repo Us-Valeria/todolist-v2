@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import type { GlobalToken } from 'antd';
 import { List, theme } from 'antd';
 import { css } from '@emotion/react';
-import TaskItem from './TaskItem';
-import useFilterTasks from '../hooks/useFilterTasks';
-import useFilter from '../stores/useFilter';
-import useTasks from '../stores/useTasks';
-import useSelectedSort from '../stores/useSelectedSort';
-import useSort from '../hooks/useSort';
-import useSortDirection from '../hooks/useSortDirection';
+import { useSelector } from 'react-redux';
+import TaskItem from '../components/TaskItem';
+import useFilterTasks from '../../Filter/hooks/useFilterTasks';
+import useSort from '../../Sort/hooks/useSort';
+import useSortDirection from '../../Sort/hooks/useSortDirection';
+import { useGetTasksQuery } from '../../../api/tasksApi';
+import type { RootState } from '../../../app/store';
 
 const styles = (token: GlobalToken) => ({
   list: css`
@@ -23,16 +23,13 @@ const styles = (token: GlobalToken) => ({
 function TaskList() {
   const { token } = theme.useToken();
 
-  const { fetchTasks, tasks, loading } = useTasks();
+  const { data = [], isLoading } = useGetTasksQuery();
+  const filter = useSelector((state: RootState) => state.filter);
+  const { sortKey, direction } = useSelector(
+    (state: RootState) => state.sorted,
+  );
 
-  useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
-
-  const { filter } = useFilter();
-  const { sortKey, direction } = useSelectedSort();
-
-  const filteredTaskList = useFilterTasks(tasks, filter);
+  const filteredTaskList = useFilterTasks(data, filter);
   const sortedList = useSort(filteredTaskList, sortKey);
   const sortDirectionList = useSortDirection(sortedList, direction);
   return (
@@ -40,7 +37,7 @@ function TaskList() {
       css={styles(token).list}
       size="large"
       bordered
-      loading={loading}
+      loading={isLoading}
       dataSource={sortDirectionList}
       renderItem={(task) => <TaskItem key={task._id} task={task} />}
       locale={{ emptyText: 'Список пуст' }}

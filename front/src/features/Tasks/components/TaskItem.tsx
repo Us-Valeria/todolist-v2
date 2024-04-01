@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Checkbox, Typography, List } from 'antd';
-import type { Task } from '../models/Task';
-import useTasks from '../stores/useTasks';
+import type { Task } from '../../../models/Task';
 import EditTaskModal from './EditTaskModal';
+import { useUpdateTaskMutation } from '../../../api/tasksApi';
 
 type Props = {
   task: Task;
@@ -12,7 +12,7 @@ const { Text } = Typography;
 
 function TaskItem({ task }: Props) {
   const [isEditing, setIsEditing] = useState(false);
-  const changeTask = useTasks((state) => state.changeTask);
+  const [updateTask] = useUpdateTaskMutation();
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -27,14 +27,10 @@ function TaskItem({ task }: Props) {
               key="edit-status-task"
               onClick={(e) => e.stopPropagation()}
               onChange={() => {
-                changeTask(
-                  {
-                    completed: !task.completed,
-                    title: task.title,
-                    text: task.text,
-                  },
-                  task._id,
-                );
+                updateTask({
+                  _id: task._id,
+                  completed: !task.completed,
+                });
               }}
               checked={task.completed}
             />

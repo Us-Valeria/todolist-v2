@@ -4,25 +4,30 @@ import {
   SortAscendingOutlined,
   SortDescendingOutlined,
 } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSortKey, setDirection } from '../sortSlice';
+import { SORTED_DIRECTION } from '../models/SortDirection';
+import type { RootState } from '../../../app/store';
 import type { SortedKey } from '../models/SortKey';
 import { SORTED_KEY } from '../models/SortKey';
-import useSelectedSort from '../stores/useSelectedSort';
-import { SORTED_DIRECTION } from '../models/SortDirection';
 
 function SelectedSort() {
-  const { sortKey, setSortKey, direction, setDirection } = useSelectedSort();
+  const dispatch = useDispatch();
+  const { sortKey, direction } = useSelector(
+    (state: RootState) => state.sorted,
+  );
 
   const handleSortClick = (clickedSortKey: SortedKey) => {
     if (clickedSortKey === sortKey) {
       if (direction === SORTED_DIRECTION.ASC) {
-        setDirection(SORTED_DIRECTION.DESC);
+        dispatch(setDirection(SORTED_DIRECTION.DESC));
       } else {
-        setSortKey(SORTED_KEY.DEFAULT);
-        setDirection(SORTED_DIRECTION.ASC);
+        dispatch(setDirection(SORTED_DIRECTION.ASC));
+        dispatch(setSortKey(SORTED_KEY.DEFAULT));
       }
     } else {
-      setSortKey(clickedSortKey);
-      setDirection(SORTED_DIRECTION.ASC);
+      dispatch(setSortKey(clickedSortKey));
+      dispatch(setDirection(SORTED_DIRECTION.ASC));
     }
   };
 
@@ -31,7 +36,7 @@ function SelectedSort() {
       <Button
         onClick={() => handleSortClick(SORTED_KEY.TITLE)}
         icon={
-          SORTED_DIRECTION.ASC ? (
+          direction === SORTED_DIRECTION.ASC ? (
             <SortAscendingOutlined />
           ) : (
             <SortDescendingOutlined />
@@ -43,7 +48,7 @@ function SelectedSort() {
       <Button
         onClick={() => handleSortClick(SORTED_KEY.DATE)}
         icon={
-          SORTED_DIRECTION.ASC ? (
+          direction === SORTED_DIRECTION.ASC ? (
             <SortAscendingOutlined />
           ) : (
             <SortDescendingOutlined />

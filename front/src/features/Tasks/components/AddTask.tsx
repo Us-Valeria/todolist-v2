@@ -3,7 +3,7 @@ import type { GlobalToken } from 'antd';
 import { Form, Input, theme } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { css } from '@emotion/react';
-import useTasks from '../stores/useTasks';
+import { useAddTaskMutation } from '../../../api/tasksApi';
 
 const style = (token: GlobalToken) => ({
   form: css`
@@ -19,7 +19,7 @@ const style = (token: GlobalToken) => ({
 
 function AddTask() {
   const { token } = theme.useToken();
-  const createTask = useTasks((state) => state.createTask);
+  const [createTask] = useAddTaskMutation();
   const [form] = Form.useForm();
   return (
     <Form
@@ -28,7 +28,7 @@ function AddTask() {
       form={form}
       autoComplete="off"
       onFinish={({ title }) => {
-        createTask(title);
+        createTask({ title });
         form.resetFields();
       }}
     >

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import dayjs from 'dayjs';
-import type { Task } from '../models/Task';
+import type { Task } from '../../../models/Task';
 import { SORTED_KEY } from '../models/SortKey';
 
 const useSort = (tasks: Task[], sortKey: string) => {

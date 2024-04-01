@@ -15,10 +15,10 @@ const port = process.env.PORT || 4000;
 app.use(express.json());
 app.use(cors());
 
-app.get("/", TaskController.getAll);
-app.post("/", TaskController.create);
-app.delete("/:id", TaskController.remove);
-app.put("/:id", TaskController.update);
+app.get("/tasks", TaskController.getAll);
+app.post("/tasks", TaskController.create);
+app.delete("/tasks/:id", TaskController.remove);
+app.put("/tasks/:id", TaskController.update);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

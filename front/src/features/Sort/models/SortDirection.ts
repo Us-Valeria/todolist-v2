@@ -1,4 +1,4 @@
-import type { EnumLiteralsOf } from '../utils/EnumLiteralsOf';
+import type { EnumLiteralsOf } from '../../../utils/EnumLiteralsOf';
 
 export const SORTED_DIRECTION = {
   ASC: 'ASC',

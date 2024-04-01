@@ -53,14 +53,22 @@ export const remove = async (req: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
   try {
     const taskId = req.params.id;
-    const task = await Task.updateOne(
-      { _id: taskId },
-      {
-        title: req.body.title,
-        text: req.body.text,
-        completed: req.body.completed,
-      }
-    );
+    const updateFields: { title?: string; text?: string; completed?: boolean } =
+      {};
+
+    if (req.body.title) {
+      updateFields.title = req.body.title;
+    }
+
+    if (req.body.text) {
+      updateFields.text = req.body.text;
+    }
+
+    if (req.body.completed !== undefined) {
+      updateFields.completed = req.body.completed;
+    }
+
+    const task = await Task.updateOne({ _id: taskId }, updateFields);
 
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
@@ -68,9 +76,7 @@ export const update = async (req: Request, res: Response) => {
 
     res.json({
       _id: taskId,
-      title: req.body.title,
-      text: req.body.text,
-      completed: req.body.completed,
+      ...updateFields,
     });
   } catch (err) {
     console.error(err);

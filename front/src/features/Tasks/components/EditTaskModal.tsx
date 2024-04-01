@@ -3,8 +3,11 @@ import { Modal, Input, Form, Button } from 'antd';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ru';
-import useTasks from '../stores/useTasks';
-import type { Task } from '../models/Task';
+import type { Task } from '../../../models/Task';
+import {
+  useDeleteTaskMutation,
+  useUpdateTaskMutation,
+} from '../../../api/tasksApi';
 
 dayjs.extend(relativeTime);
 
@@ -17,11 +20,16 @@ type Props = {
 
 function EditTaskModal({ task, onClose }: Props) {
   const [form] = Form.useForm();
-  const { changeTask, removeTask } = useTasks();
+  const [deleteTask] = useDeleteTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
 
   const handleSave = () => {
     form.validateFields().then((values) => {
-      changeTask({ ...values, completed: task.completed }, task._id);
+      updateTask({
+        _id: task._id,
+        title: values.title,
+        text: values.text,
+      });
       form.resetFields();
       onClose();
     });
@@ -38,7 +46,7 @@ function EditTaskModal({ task, onClose }: Props) {
         <Button
           key="remove"
           onClick={() => {
-            removeTask(task._id);
+            deleteTask(task._id);
             onClose();
           }}
           danger
