@@ -4,10 +4,10 @@ import 'antd/dist/reset.css';
 import { css } from '@emotion/react';
 import dayjs from 'dayjs';
 import { Provider } from 'react-redux';
-import AddTask from './features/Tasks/components/AddTask';
-import TaskList from './features/Tasks/containers/TaskList';
-import FilterTaskList from './features/Filter/components/FilterTaskList';
-import SelectedSort from './features/Sort/components/SelectedSort';
+import AddTask from './features/Tasks/AddTask';
+import TaskList from './features/Tasks/TaskList';
+import FilterTaskList from './features/Filter';
+import SelectSort from './features/Sort';
 import { store } from './app/store';
 
 dayjs.locale('ru');
@@ -35,7 +35,7 @@ function App() {
           <AddTask />
           <Flex justify="space-between">
             <FilterTaskList />
-            <SelectedSort />
+            <SelectSort />
           </Flex>
           <TaskList />
         </Content>

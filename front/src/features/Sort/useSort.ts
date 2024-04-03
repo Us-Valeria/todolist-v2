@@ -1,24 +1,25 @@
 import { useMemo } from 'react';
 import dayjs from 'dayjs';
-import type { Task } from '../../../models/Task';
-import { SORTED_KEY } from '../models/SortKey';
+import type { Task } from '../../models/Task';
+import type { SortKey } from '../../models/SortKey';
+import { SORT_KEY } from '../../models/SortKey';
 
-const useSort = (tasks: Task[], sortKey: string) => {
+const useSort = (tasks: Task[], key: SortKey) => {
   const sortTasks = useMemo(() => {
     if (!tasks) return [];
-    switch (sortKey) {
-      case SORTED_KEY.DEFAULT:
+    switch (key) {
+      case SORT_KEY.DEFAULT:
         return tasks;
-      case SORTED_KEY.DATE:
+      case SORT_KEY.DATE:
         return [...tasks].sort((a, b) =>
           dayjs(a.createdAt).diff(dayjs(b.createdAt)),
         );
-      case SORTED_KEY.TITLE:
+      case SORT_KEY.TITLE:
         return [...tasks].sort((a, b) => a.title.localeCompare(b.title));
       default:
-        throw new Error(`Unknown sorting order: ${sortKey}`);
+        throw new Error(`Unknown sorting order: ${key}`);
     }
-  }, [tasks, sortKey]);
+  }, [tasks, key]);
   return sortTasks;
 };
 export default useSort;

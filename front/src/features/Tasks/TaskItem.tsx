@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Checkbox, Typography, List } from 'antd';
-import type { Task } from '../../../models/Task';
+import type { Task } from '../../models/Task';
 import EditTaskModal from './EditTaskModal';
-import { useUpdateTaskMutation } from '../../../api/tasksApi';
+import { useUpdateTaskMutation } from '../../api/tasksApi';
 
 type Props = {
   task: Task;

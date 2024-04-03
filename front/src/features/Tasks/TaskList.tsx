@@ -3,12 +3,13 @@ import type { GlobalToken } from 'antd';
 import { List, theme } from 'antd';
 import { css } from '@emotion/react';
 import { useSelector } from 'react-redux';
-import TaskItem from '../components/TaskItem';
-import useFilterTasks from '../../Filter/hooks/useFilterTasks';
-import useSort from '../../Sort/hooks/useSort';
-import useSortDirection from '../../Sort/hooks/useSortDirection';
-import { useGetTasksQuery } from '../../../api/tasksApi';
-import type { RootState } from '../../../app/store';
+import TaskItem from './TaskItem';
+import useFilterTasks from '../Filter/useFilterTasks';
+import useSort from '../Sort/useSort';
+import useSortDirection from '../Sort/useSortDirection';
+import { useGetTasksQuery } from '../../api/tasksApi';
+import type { RootState } from '../../app/store';
+import { selectSort } from '../Sort/sortSlice';
 
 const styles = (token: GlobalToken) => ({
   list: css`
@@ -25,13 +26,12 @@ function TaskList() {
 
   const { data = [], isLoading } = useGetTasksQuery();
   const filter = useSelector((state: RootState) => state.filter);
-  const { sortKey, direction } = useSelector(
-    (state: RootState) => state.sorted,
-  );
+  const sort = useSelector(selectSort);
 
   const filteredTaskList = useFilterTasks(data, filter);
-  const sortedList = useSort(filteredTaskList, sortKey);
-  const sortDirectionList = useSortDirection(sortedList, direction);
+  const sortedList = useSort(filteredTaskList, sort.key);
+  const sortDirectionList = useSortDirection(sortedList, sort.direction);
+
   return (
     <List
       css={styles(token).list}

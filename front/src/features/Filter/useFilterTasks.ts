@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { Task } from '../../../models/Task';
+import type { Task } from '../../models/Task';
 
 const useFilterTasks = (tasks: Task[], filter: string) => {
   const filteredTasks = useMemo(() => {

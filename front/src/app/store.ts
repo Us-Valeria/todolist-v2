@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     [tasksApi.reducerPath]: tasksApi.reducer,
     filter: filterReducer,
-    sorted: sortSlice,
+    sort: sortSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(tasksApi.middleware),

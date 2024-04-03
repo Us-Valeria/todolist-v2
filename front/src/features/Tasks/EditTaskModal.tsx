@@ -3,11 +3,11 @@ import { Modal, Input, Form, Button } from 'antd';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ru';
-import type { Task } from '../../../models/Task';
+import type { Task } from '../../models/Task';
 import {
   useDeleteTaskMutation,
   useUpdateTaskMutation,
-} from '../../../api/tasksApi';
+} from '../../api/tasksApi';
 
 dayjs.extend(relativeTime);
 

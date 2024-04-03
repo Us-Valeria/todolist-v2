@@ -3,7 +3,7 @@ import type { GlobalToken } from 'antd';
 import { Form, Input, theme } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { css } from '@emotion/react';
-import { useAddTaskMutation } from '../../../api/tasksApi';
+import { useAddTaskMutation } from '../../api/tasksApi';
 
 const style = (token: GlobalToken) => ({
   form: css`
