@@ -1,20 +1,33 @@
 import React from 'react';
-import { Button } from 'antd';
+import type { GlobalToken } from 'antd';
+import { Button, theme } from 'antd';
 import {
   SortAscendingOutlined,
   SortDescendingOutlined,
 } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { css } from '@emotion/react';
 import { setSort, selectSort } from './sortSlice';
+import type { SortDirection } from '../../models/SortDirection';
 import { SORT_DIRECTION } from '../../models/SortDirection';
-import type { SortKey } from '../../models/SortKey';
+import { SORT_KEY, type SortKey } from '../../models/SortKey';
 
 type SortButtonProps = {
   sortKey: SortKey;
+  sortDirection: SortDirection;
   children: React.ReactNode;
 };
 
-function SortButton({ sortKey, children }: SortButtonProps) {
+const style = (token: GlobalToken, currentDirection: SortDirection | null) => ({
+  button: css`
+    background-color: ${currentDirection
+      ? token.colorPrimaryBg
+      : token.colorBgContainer};
+  `,
+});
+
+function SortButton({ sortKey, sortDirection, children }: SortButtonProps) {
+  const { token } = theme.useToken();
   const dispatch = useDispatch();
   const sort = useSelector(selectSort);
 
@@ -28,12 +41,16 @@ function SortButton({ sortKey, children }: SortButtonProps) {
         return SORT_DIRECTION.ASC;
     }
   };
-
   const handleSortClick = (clickedSortKey: SortKey) => {
+    const nextKey =
+      sort.direction !== SORT_DIRECTION.DESC || sort.key !== clickedSortKey
+        ? clickedSortKey
+        : SORT_KEY.DEFAULT;
     dispatch(
       setSort({
-        key: clickedSortKey,
-        direction: sort.key === sortKey ? getNextDirection() : null,
+        key: nextKey,
+        direction:
+          sort.key === clickedSortKey ? getNextDirection() : sortDirection,
       }),
     );
   };
@@ -45,12 +62,13 @@ function SortButton({ sortKey, children }: SortButtonProps) {
     <Button
       onClick={() => handleSortClick(sortKey)}
       icon={
-        currentDirection === SORT_DIRECTION.ASC ? (
-          <SortAscendingOutlined />
-        ) : (
+        currentDirection === SORT_DIRECTION.DESC ? (
           <SortDescendingOutlined />
+        ) : (
+          <SortAscendingOutlined />
         )
       }
+      css={style(token, currentDirection).button}
     >
       {children}
     </Button>

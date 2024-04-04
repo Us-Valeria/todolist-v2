@@ -2,17 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { SortKey } from '../../models/SortKey';
 import { SORT_KEY } from '../../models/SortKey';
 import type { SortDirection } from '../../models/SortDirection';
-import { SORT_DIRECTION } from '../../models/SortDirection';
 import type { RootState } from '../../app/store';
 
 type State = {
   key: SortKey;
-  direction: SortDirection;
+  direction: SortDirection | null;
 };
 
 const initialState: State = {
   key: SORT_KEY.DEFAULT,
-  direction: SORT_DIRECTION.ASC,
+  direction: null,
 };
 
 const sortSlice = createSlice({

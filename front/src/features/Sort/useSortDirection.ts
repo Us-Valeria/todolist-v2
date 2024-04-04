@@ -3,7 +3,10 @@ import type { Task } from '../../models/Task';
 import type { SortDirection } from '../../models/SortDirection';
 import { SORT_DIRECTION } from '../../models/SortDirection';
 
-const useSortDirection = (tasks: Task[], sortDirection: SortDirection) => {
+const useSortDirection = (
+  tasks: Task[],
+  sortDirection: SortDirection | null,
+): Task[] => {
   const directionTasks = useMemo(() => {
     if (!tasks) return [];
     switch (sortDirection) {
