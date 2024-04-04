@@ -51,7 +51,8 @@ function App() {
             <Space>
               <Text>Сменить тему</Text>
               <Switch
-                onClick={() => {
+                value={isDark}
+                onChange={() => {
                   dispatch(setTheme());
                 }}
               />
