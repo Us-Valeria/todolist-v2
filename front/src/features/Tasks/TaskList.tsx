@@ -8,8 +8,8 @@ import useFilterTasks from '../Filter/useFilterTasks';
 import useSort from '../Sort/useSort';
 import useSortDirection from '../Sort/useSortDirection';
 import { useGetTasksQuery } from '../../api/tasksApi';
-import type { RootState } from '../../app/store';
 import { selectSort } from '../Sort/sortSlice';
+import { selectFilter } from '../Filter/filterSlice';
 
 const styles = (token: GlobalToken) => ({
   list: css`
@@ -25,7 +25,7 @@ function TaskList() {
   const { token } = theme.useToken();
 
   const { data = [], isLoading } = useGetTasksQuery();
-  const filter = useSelector((state: RootState) => state.filter);
+  const filter = useSelector(selectFilter);
   const sort = useSelector(selectSort);
 
   const filteredTaskList = useFilterTasks(data, filter);
