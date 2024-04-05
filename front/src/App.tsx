@@ -1,17 +1,10 @@
 import type { GlobalToken } from 'antd';
-import {
-  Flex,
-  Layout,
-  theme,
-  Typography,
-  ConfigProvider,
-  Switch,
-  Space,
-} from 'antd';
+import { Flex, Layout, theme, Typography, ConfigProvider, Switch } from 'antd';
 import 'antd/dist/reset.css';
 import { css } from '@emotion/react';
 import dayjs from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
+import { MoonOutlined, SunOutlined } from '@ant-design/icons';
 import AddTask from './features/Tasks/AddTask';
 import TaskList from './features/Tasks/TaskList';
 import FilterTaskList from './features/Filter';
@@ -21,7 +14,7 @@ import { selectTheme, setTheme } from './features/theme/themeSlice';
 dayjs.locale('ru');
 
 const { Content } = Layout;
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 const styles = (token: GlobalToken) => ({
   page: css`
@@ -48,15 +41,14 @@ function App() {
         <Content css={styles(token).body}>
           <Flex justify="space-between" align="center">
             <Title>Список задач</Title>
-            <Space>
-              <Text>Сменить тему</Text>
-              <Switch
-                value={isDark}
-                onChange={() => {
-                  dispatch(setTheme());
-                }}
-              />
-            </Space>
+            <Switch
+              value={isDark}
+              checkedChildren={<SunOutlined />}
+              unCheckedChildren={<MoonOutlined />}
+              onChange={() => {
+                dispatch(setTheme());
+              }}
+            />
           </Flex>
           <AddTask />
           <Flex justify="space-between">
