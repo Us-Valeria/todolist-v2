@@ -27,7 +27,7 @@ export const tasksApi = createApi({
     }),
     updateTask: builder.mutation<Task, Partial<Task>>({
       query: ({ _id, ...value }) => ({
-        url: `tasks/${_id}`,
+        url: `tasks/update/${_id}`,
         method: 'PUT',
         body: { ...value },
       }),
@@ -35,6 +35,14 @@ export const tasksApi = createApi({
     }),
     deleteTask: builder.mutation({
       query: (id) => ({ url: `tasks/${id}`, method: 'DELETE' }),
+      invalidatesTags: [{ type: 'Tasks', id: 'LIST' }],
+    }),
+    updateOrderList: builder.mutation({
+      query: (body) => ({
+        url: 'tasks',
+        method: 'PUT',
+        body,
+      }),
       invalidatesTags: [{ type: 'Tasks', id: 'LIST' }],
     }),
   }),
@@ -45,4 +53,5 @@ export const {
   useAddTaskMutation,
   useDeleteTaskMutation,
   useUpdateTaskMutation,
+  useUpdateOrderListMutation,
 } = tasksApi;

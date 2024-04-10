@@ -85,3 +85,20 @@ export const update = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const updateOrder = async (req: Request, res: Response) => {
+  try {
+    const updateOrderList = req.body;
+
+    await Task.deleteMany({});
+    await Task.insertMany(updateOrderList);
+
+    const updatedTasks = await Task.find();
+    return res.json(updatedTasks);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Failed to update tasks",
+    });
+  }
+};
