@@ -1,14 +1,14 @@
-import React from 'react';
-import type { GlobalToken } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { List, theme } from 'antd';
 import { css } from '@emotion/react';
 import { useSelector } from 'react-redux';
+import type { GlobalToken } from 'antd';
 import type { DragEndEvent, UniqueIdentifier } from '@dnd-kit/core';
 import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
 import {
   SortableContext,
-  verticalListSortingStrategy,
   arrayMove,
+  verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import TaskItem from './TaskItem';
 import useFilterTasks from '../Filter/useFilterTasks';
@@ -34,7 +34,7 @@ const styles = (token: GlobalToken) => ({
 
 function TaskList() {
   const { token } = theme.useToken();
-
+  const [showList, setShowList] = useState<Task[]>([]);
   const { data = [], isLoading } = useGetTasksQuery();
 
   const filter = useSelector(selectFilter);
@@ -43,6 +43,12 @@ function TaskList() {
   const filteredTaskList = useFilterTasks(data, filter);
   const sortedList = useSort(filteredTaskList, sort.key);
   const sortDirectionList = useSortDirection(sortedList, sort.direction);
+
+  useEffect(() => {
+    if (sortDirectionList.length > 0) {
+      setShowList(sortDirectionList);
+    }
+  }, [sortDirectionList]);
 
   const [updateOrder] = useUpdateOrderListMutation();
 
@@ -58,7 +64,8 @@ function TaskList() {
 
   const onDragEnd = async ({ active, over }: DragEndEvent) => {
     if (active.id !== over?.id) {
-      const newList = newOrderList(sortDirectionList, active.id, over?.id);
+      const newList = newOrderList(showList, active.id, over?.id);
+      setShowList(newList);
       await updateOrder(newList);
     }
   };
@@ -70,7 +77,7 @@ function TaskList() {
   return (
     <DndContext onDragEnd={onDragEnd} sensors={[sensor]}>
       <SortableContext
-        items={sortDirectionList.map((task) => task._id)}
+        items={showList.map((task) => task._id)}
         strategy={verticalListSortingStrategy}
       >
         <List
@@ -78,7 +85,7 @@ function TaskList() {
           size="large"
           bordered
           loading={isLoading}
-          dataSource={sortDirectionList}
+          dataSource={showList}
           renderItem={(task) => <TaskItem key={task._id} task={task} />}
           locale={{ emptyText: 'Список пуст' }}
         />
