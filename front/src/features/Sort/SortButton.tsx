@@ -8,9 +8,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import { setSort, selectSort } from './sortSlice';
-import type { SortDirection } from '../../models/SortDirection';
-import { SORT_DIRECTION } from '../../models/SortDirection';
-import { SORT_KEY, type SortKey } from '../../models/SortKey';
+import type { SortKey, SortDirection } from '../../models/Sorting';
+import { SORT_DIRECTION, SORT_KEY } from '../../models/Sorting';
 
 type SortButtonProps = {
   sortKey: SortKey;

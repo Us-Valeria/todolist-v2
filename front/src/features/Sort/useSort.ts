@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import dayjs from 'dayjs';
 import type { Task } from '../../models/Task';
-import type { SortKey } from '../../models/SortKey';
-import { SORT_KEY } from '../../models/SortKey';
+import type { SortKey } from '../../models/Sorting';
+import { SORT_KEY } from '../../models/Sorting';
 
 const useSort = (tasks: Task[], key: SortKey) => {
   const sortTasks = useMemo(() => {

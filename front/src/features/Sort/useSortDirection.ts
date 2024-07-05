@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import type { Task } from '../../models/Task';
-import type { SortDirection } from '../../models/SortDirection';
-import { SORT_DIRECTION } from '../../models/SortDirection';
+import { SORT_DIRECTION, type SortDirection } from '../../models/Sorting';
 
 const useSortDirection = (
   tasks: Task[],

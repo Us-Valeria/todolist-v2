@@ -1,8 +1,7 @@
 import React from 'react';
 import { Space } from 'antd';
 import SortButton from './SortButton';
-import { SORT_KEY } from '../../models/SortKey';
-import { SORT_DIRECTION } from '../../models/SortDirection';
+import { SORT_DIRECTION, SORT_KEY } from '../../models/Sorting';
 
 function SelectSort() {
   return (

@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { SortKey } from '../../models/SortKey';
-import { SORT_KEY } from '../../models/SortKey';
-import type { SortDirection } from '../../models/SortDirection';
+import { SORT_KEY } from '../../models/Sorting';
+import type { SortDirection, SortKey } from '../../models/Sorting';
 import type { RootState } from '../../app/store';
 
 type State = {

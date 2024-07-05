@@ -5,4 +5,11 @@ export const SORT_DIRECTION = {
   DESC: 'DESC',
 } as const;
 
+export const SORT_KEY = {
+  DEFAULT: 'DEFAULT',
+  TITLE: 'TITLE',
+  DATE: 'DATE',
+} as const;
+
+export type SortKey = EnumLiteralsOf<typeof SORT_KEY>;
 export type SortDirection = EnumLiteralsOf<typeof SORT_DIRECTION>;
