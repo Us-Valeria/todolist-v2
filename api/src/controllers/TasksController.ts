@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import Task from "../models/Task";
 import { Request, Response } from "express";
 
@@ -39,9 +40,7 @@ export const remove = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Task not found" });
     }
 
-    res.json({
-      message: "True",
-    });
+    res.json({});
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -88,13 +87,23 @@ export const update = async (req: Request, res: Response) => {
 
 export const updateOrder = async (req: Request, res: Response) => {
   try {
-    const updateOrderList = req.body;
+    const activeId = new ObjectId(req.body.active.id)
+    const overId = new ObjectId(req.body.over.id)
+    const tasks = await Task.find();
+
+    const activeIndex = tasks.findIndex(task => (task._id.equals(activeId)));
+    const overIndex = tasks.findIndex(task => (task._id.equals(overId)));
+  
+    if (activeIndex === -1 || overIndex === -1) {
+      return res.status(400).json({ message: 'Tasks not found' });
+    }
+  
+    const [movedTasks] = tasks.splice(activeIndex, 1);
+    tasks.splice(overIndex, 0, movedTasks);
 
     await Task.deleteMany({});
-    await Task.insertMany(updateOrderList);
-
-    const updatedTasks = await Task.find();
-    return res.json(updatedTasks);
+    await Task.insertMany(tasks);
+    res.json({});
   } catch (err) {
     console.error(err);
     return res.status(500).json({

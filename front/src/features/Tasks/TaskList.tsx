@@ -66,7 +66,7 @@ function TaskList() {
     if (active.id !== over?.id) {
       const newList = newOrderList(showList, active.id, over?.id);
       setShowList(newList);
-      await updateOrder(newList);
+      await updateOrder({ active, over });
     }
   };
 
