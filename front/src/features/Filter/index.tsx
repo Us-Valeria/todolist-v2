@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FILTER } from '../../models/Filter';
 import { setFilter, selectFilter } from './filterSlice';
 
-function FilterTaskList() {
+function Filter() {
   const dispatch = useDispatch();
   const onChange = (e: RadioChangeEvent) => dispatch(setFilter(e.target.value));
   const filter = useSelector(selectFilter);
@@ -23,4 +23,4 @@ function FilterTaskList() {
   );
 }
 
-export default FilterTaskList;
+export default Filter;

@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MoonOutlined, SunOutlined } from '@ant-design/icons';
 import AddTask from './features/Tasks/AddTask';
 import TaskList from './features/Tasks/TaskList';
-import FilterTaskList from './features/Filter';
-import SelectSort from './features/Sort';
+import Filter from './features/Filter';
+import Sorting from './features/Sort';
 import { selectTheme, setTheme } from './features/theme/themeSlice';
 
 dayjs.locale('ru');
@@ -52,8 +52,8 @@ function App() {
           </Flex>
           <AddTask />
           <Flex justify="space-between">
-            <FilterTaskList />
-            <SelectSort />
+            <Filter />
+            <Sorting />
           </Flex>
           <TaskList />
         </Content>

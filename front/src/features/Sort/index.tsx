@@ -3,7 +3,7 @@ import { Space } from 'antd';
 import SortButton from './SortButton';
 import { SORT_DIRECTION, SORT_KEY } from '../../models/Sorting';
 
-function SelectSort() {
+function Sorting() {
   return (
     <Space>
       <SortButton sortKey={SORT_KEY.TITLE} sortDirection={SORT_DIRECTION.ASC}>
@@ -15,4 +15,4 @@ function SelectSort() {
     </Space>
   );
 }
-export default SelectSort;
+export default Sorting;
